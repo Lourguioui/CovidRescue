@@ -7,7 +7,7 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 import { Dimensions } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { IonIcons } from "@expo/vector-icons";
-import HomeScreen from './screens/HomeScreen';
+import Advices from './screens/Advices';
 import { FontAwesome5 } from '@expo/vector-icons';
 import SideBar from './components/SideBar';
 
@@ -21,10 +21,10 @@ import SideBar from './components/SideBar';
 
 const DrawerNavigation = createDrawerNavigator(
   {
-    HomeScreen: {
-      screen: HomeScreen,
+    Advices: {
+      screen: Advices,
       navigationOptions: {
-        title : 'Aceuil',
+        title : 'Conseils',
         drawerIcon: ({ tinColor }) => <Feather name='home' size={20} color={tinColor} />
       }
     },
