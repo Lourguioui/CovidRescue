@@ -2,26 +2,52 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Register from './screens/Register';
 import Login from './screens/Login';
-import {createAppContainer} from 'react-navigation';
-import {createDrawerNavigator} from 'react-navigation-drawer';
-import {Dimensions} from 'react-native';
-import {Feather} from '@expo/vector-icons';
-import {ProfileScreen, MessagesScreen, ActivityScreen} from './screens/HomeScreen';
+import { createAppContainer } from 'react-navigation';
+import { createDrawerNavigator } from 'react-navigation-drawer';
+import { Dimensions } from 'react-native';
+import { Feather } from '@expo/vector-icons';
+import { IonIcons } from "@expo/vector-icons";
+import HomeScreen from './screens/HomeScreen';
+import { FontAwesome5 } from '@expo/vector-icons';
 import SideBar from './components/SideBar';
 
-const DrawerNavigation = createDrawerNavigator({
-  Register : {
-    screen: Register,
-    navigationOptions : {
-      drawerIcon : ({tinColor}) => <Feather name='home' size={20} color={tinColor} />
+// export default function App(){
+
+//     return(
+//      <HomeScreen />
+//     );
+
+// }
+
+const DrawerNavigation = createDrawerNavigator(
+  {
+    HomeScreen: {
+      screen: HomeScreen,
+      navigationOptions: {
+        title : 'Aceuil',
+        drawerIcon: ({ tinColor }) => <Feather name='home' size={20} color={tinColor} />
+      }
+    },
+    Login: {
+      screen: Login,
+      navigationOptions: {
+        title:'Profile',
+        drawerIcon: ({ tinColor }) => <Feather name='user' size={20} color={tinColor} />
+      }
+    },
+    Register: {
+      screen: Register,
+      navigationOptions: {
+        title:'Deconnexion',
+        drawerIcon: ({ tinColor }) => <Feather name='log-out' size={20} color={tinColor} />
+      }
+
     }
   },
-  Login,
-  
-},
-{
-  contentComponent: props => <SideBar {...props} />
-}
+  {
+    contentComponent: props => <SideBar {...props} />
+  }
+
 );
 
 export default createAppContainer(DrawerNavigation);
