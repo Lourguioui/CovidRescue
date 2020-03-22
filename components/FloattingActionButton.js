@@ -14,7 +14,7 @@ export default class FloattingActionButton extends React.Component {
     render() {
         return (
             <TouchableOpacity
-                onPress={this.props.navigation.navigate('QRscanner')}
+                onPress={() => this.props.navigation.navigate('QRscanner')}
                 style={{
                     borderWidth: 1,
                     borderColor: 'rgba(0,0,0,0.2)',

@@ -93,7 +93,7 @@ export default class Login extends React.Component {
 
                     </LinearGradient>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.textContainer}>
+                <TouchableOpacity style={styles.textContainer} onPress={this.props.navigation.push("Register")}>
                     <Text style={styles.textStyle}>Vous n'avez pas un compte? Inscrivez vous!</Text>
                 </TouchableOpacity>
                
@@ -116,11 +116,11 @@ export default class Login extends React.Component {
                     this.props.navigation.navigate('main');
                 } else {
                     
-                    this.props.navigation.navigate('main');
+                    
                 }
             })
             .catch(error => {
-                this.props.navigation.navigate('main');
+               
                 alert(error);
             })
             this.props.navigation.navigate('main');

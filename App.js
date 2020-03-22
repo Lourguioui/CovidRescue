@@ -20,18 +20,15 @@ const StackNavigator = createStackNavigator();
 
 export default function App(){
   return(
-    <QrCodeScanner />
-  // <NavigationContainer>
-  //   <StackNavigator.Navigator initialRouteName = "Home" screenOptions={{headerShown:false, }}>
-  //     <StackNavigator.Screen name="Home" component={Login} />
-  //     <StackNavigator.Screen name="Register" component={Register} />
-  //     <StackNavigator.Screen name="main" component={HomeScreen} />
-  //     <StackNavigator.Screen name="QRscanner" component={QrCodeScanner} />
-
+    
+  <NavigationContainer>
+    <StackNavigator.Navigator initialRouteName = "Home" screenOptions={{headerShown:false, }}>
+      <StackNavigator.Screen name="Home" component={Login} />
       
-
-  //   </StackNavigator.Navigator>
-  // </NavigationContainer>
+      <StackNavigator.Screen name="main" component={HomeScreen} />
+     
+    </StackNavigator.Navigator>
+  </NavigationContainer>
   );
 
 }
