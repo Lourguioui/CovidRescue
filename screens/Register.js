@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         flexDirection: 'column',
         padding: 0,
-        marginBottom:'3%',
+        marginBottom:'1%',
     },
     container: {
         flex: 1,
@@ -167,8 +167,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width:320,
         marginLeft:22,
-        bottom:20,
-        borderRadius:20,
+        bottom:30,
+        borderRadius:100,
         
       
     },
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         height: '100%',
-        borderRadius:20,
+        borderRadius:100,
        
 
     },
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
        
     },
     textContainer:{
-        
+        bottom:10,
         height:10,
         justifyContent:'center',
         alignItems: 'center',

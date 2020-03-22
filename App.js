@@ -11,6 +11,27 @@ import Advices from './screens/Advices';
 import { FontAwesome5 } from '@expo/vector-icons';
 import SideBar from './components/SideBar';
 
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+
+const StackNavigator = createStackNavigator();
+
+export default function App(){
+  return(
+  <NavigationContainer>
+    <StackNavigator.Navigator initialRouteName = "Home" screenOptions={{headerShown:false, }}>
+      <StackNavigator.Screen name="Home" component={Login} />
+      <StackNavigator.Screen name="Register" component={Register} />
+      
+
+    </StackNavigator.Navigator>
+  </NavigationContainer>
+  );
+
+}
+
+
 // export default function App(){
 
 //     return(
@@ -19,38 +40,38 @@ import SideBar from './components/SideBar';
 
 // }
 
-const DrawerNavigation = createDrawerNavigator(
-  {
-    Advices: {
-      screen: Advices,
-      navigationOptions: {
-        title : 'Conseils',
-        drawerIcon: ({ tinColor }) => <Feather name='home' size={20} color={tinColor} />
-      }
-    },
-    Login: {
-      screen: Login,
-      navigationOptions: {
-        title:'Profile',
-        drawerIcon: ({ tinColor }) => <Feather name='user' size={20} color={tinColor} />
-      }
-    },
-    Register: {
-      screen: Register,
-      navigationOptions: {
-        title:'Deconnexion',
-        drawerIcon: ({ tinColor }) => <Feather name='log-out' size={20} color={tinColor} />
-      }
+// const DrawerNavigation = createDrawerNavigator(
+//   {
+//     HomeScreen: {
+//       screen: HomeScreen,
+//       navigationOptions: {
+//         title : 'Conseils',
+//         drawerIcon: ({ tinColor }) => <Feather name='home' size={20} color={tinColor} />
+//       }
+//     },
+//     Login: {
+//       screen: Login,
+//       navigationOptions: {
+//         title:'Profile',
+//         drawerIcon: ({ tinColor }) => <Feather name='user' size={20} color={tinColor} />
+//       }
+//     },
+//     Register: {
+//       screen: Register,
+//       navigationOptions: {
+//         title:'Deconnexion',
+//         drawerIcon: ({ tinColor }) => <Feather name='log-out' size={20} color={tinColor} />
+//       }
 
-    }
-  },
-  {
-    contentComponent: props => <SideBar {...props} />
-  }
+//     }
+//   },
+//   {
+//     contentComponent: props => <SideBar {...props} />
+//   }
 
-);
+// );
 
-export default createAppContainer(DrawerNavigation);
+// export default createAppContainer(DrawerNavigation);
 
 // export default function App() {
 //   return (
