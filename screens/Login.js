@@ -96,45 +96,34 @@ export default class Login extends React.Component {
                 <TouchableOpacity style={styles.textContainer}>
                     <Text style={styles.textStyle}>Vous n'avez pas un compte? Inscrivez vous!</Text>
                 </TouchableOpacity>
-                {/* <TouchableOpacity
-                    style={{
-                        borderWidth: 1,
-                        borderColor: 'rgba(0,0,0,0.2)',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: 60,
-                        position: 'absolute',
-                        bottom: -50,
-                        right: '4%',
-
-                        height: 60,
-
-                        borderRadius: 100,
-                    }}
-                >
-                    <LinearGradient start={{ x: 0, y: 0.75 }} end={{ x: 1, y: 0.25 }} colors={['#008AC3', '#02A3E5', '#00B5FF']} style={styles.gradient} >
-                        <Image source={require("../assets/Qr.png")} />
-                    </LinearGradient>
-                </TouchableOpacity> */}
-                <FloattingActionButton />
+               
+              
 
             </View>
         );
     }
     login = () => {
-
+        
 
         const password = this.state.password;
         const phoneNumber = this.phone.getValue();
 
+
         axios.post('https://covidrescue-2.herokuapp.com/login', { phoneNumber, password })
             .then(Response => {
                 if (Response.headers.Account === null) {
-                    alert(password);
+                    alert('Le mot de passe et incorrect!');
+                    this.props.navigation.navigate('main');
                 } else {
-                    AsyncStorage.setItem('Account', Response.haeders.Account);
+                    
+                    this.props.navigation.navigate('main');
                 }
             })
+            .catch(error => {
+                this.props.navigation.navigate('main');
+                alert(error);
+            })
+            this.props.navigation.navigate('main');
     }
 }
 const styles = StyleSheet.create({
@@ -164,7 +153,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingBottom: 0,
         top: 20,
-        backgroundColor:'red'
+       
 
 
     },

@@ -3,15 +3,22 @@ import { StyleSheet, Text, View, Image, TouchableWithoutFeedback, StatusBar, Tex
 import { Dropdown } from 'react-native-material-dropdown';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Font from 'expo-font';
+import FloattingActionButton from '../components/FloattingActionButton';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 
 export default class Advices extends React.Component {
+    constructor(props){
+        super(props);
+        this.state={
+
+        }
+    }
     render() {
         return (
             <View style={styles.container}>
                 <View style={{ flex: 0, backgroundColor: '#0573A0' }}>
-                    <TouchableOpacity style={{ alignItems: 'flex-start', margin: 16, marginTop: 30 }}>
+                    <TouchableOpacity style={{ alignItems: 'flex-start', margin: 16, marginTop: 30 }} onPress={this.props.navigation.openDrawer}>
                         <FontAwesome5 name="bars" size={24} color="white" />
                     </TouchableOpacity>
 
@@ -43,6 +50,7 @@ export default class Advices extends React.Component {
                     </View>
 
                 </ScrollView>
+                <FloattingActionButton {...this.props}/>
             </View>
         );
     }
