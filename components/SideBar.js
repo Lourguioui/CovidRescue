@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, ImageBackground, Image } from 'reac
 import { DrawerNavigatorItems } from 'react-navigation-drawer';
 import { IonIcons } from "@expo/vector-icons";
 import { LinearGradient } from 'expo-linear-gradient';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 export default function SideBar(props) {
     return (

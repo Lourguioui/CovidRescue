@@ -17,7 +17,7 @@ export default class Advices extends React.Component {
         }
     }
     _navigate() {
-        this.props.navigation.navigate("QRscanner");
+        this.props.navigation.navigate("QrScanner");
     }
     _openScanner(){
         const scannerOpened = !this.state.scannerOpened;
@@ -61,7 +61,7 @@ export default class Advices extends React.Component {
 
                     </ScrollView>
                     <TouchableOpacity
-                        onPress={this._navigate()}
+                        onPress={this.props.navigation.navigate("QrScanner")}
                         style={{
                             borderWidth: 1,
                             borderColor: 'rgba(0,0,0,0.2)',

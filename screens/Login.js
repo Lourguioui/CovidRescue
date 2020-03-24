@@ -93,7 +93,7 @@ export default class Login extends React.Component {
 
                     </LinearGradient>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.textContainer} onPress={this.props.navigation.push("Register")}>
+                <TouchableOpacity style={styles.textContainer}>
                     <Text style={styles.textStyle}>Vous n'avez pas un compte? Inscrivez vous!</Text>
                 </TouchableOpacity>
                
