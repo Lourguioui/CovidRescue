@@ -16,6 +16,7 @@ import Login from './Login';
 import Register from './Register';
 
 import { createStackNavigator } from '@react-navigation/stack';
+import MainScreen from './MainScreen';
 
 
 
@@ -23,6 +24,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 const DrawerNavigation = createDrawerNavigator(
     {
+        Home : {
+            screen:MainScreen,
+            navigationOptions:{
+                title:'Aceuil',
+                drawerIcon: ({ tinColor }) => <Feather name='home' size={20} color={tinColor} />
+
+            }
+        },
         Advices : {
             screen : Advices,
             navigationOptions: {
@@ -49,7 +58,7 @@ const DrawerNavigation = createDrawerNavigator(
             screen : QrCodeScanner,
             navigationOptions:{
                 title : 'Scanner le Code QR',
-                drawerIcon: ({ tinColor }) => <Feather name='scan1' size={20} color={tinColor} />
+                drawerIcon: ({ tinColor }) => <Feather name='scan' size={20} color={tinColor} />
 
             }
         }
