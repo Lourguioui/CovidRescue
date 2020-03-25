@@ -25,9 +25,9 @@ export default class Login extends React.Component {
         this._loadingInitialState().done();
     }
     _loadingInitialState = async () => {
-        var value = await AsyncStorage.getItem('Account');
+        var value = await AsyncStorage.getItem('account');
         if (value !== null) {
-
+                
         }
     }
     selectCountry(country) {
@@ -103,19 +103,46 @@ export default class Login extends React.Component {
         );
     }
     login = () => {
-        
-
+         
         const password = this.state.password;
         const phoneNumber = this.phone.getValue();
+        
+        
+        let URL = `https://covidrescue-2.herokuapp.com/login?username=%2B${phoneNumber.toString().substr(1)}&password=${password}`;
+        alert(URL);
 
+        // let bodyFormData = new FormData();
+        // bodyFormData.set('username',phoneNumber);
+        // bodyFormData.set('password',password);
 
-        axios.post('https://covidrescue-2.herokuapp.com/login', { phoneNumber, password })
+        // axios({
+        //     method: 'post',
+        //     url: 'https://covidrescue-2.herokuapp.com/login',
+        //     data: bodyFormData,
+        //     headers: {'Content-Type': 'multipart/form-data' }
+        //     })
+        //     .then(function (Response) {
+        //         //handle success
+        //         alert(JSON.stringify(Response.headers));
+        //         this.props.navigation.navigate('main');
+
+        //     })
+        //     .catch(function (error) {
+        //         //handle error
+        //         console.log(error);
+        //     });
+       
+        //     this.props.navigation.navigate('main');
+
+        axios.post(URL)
             .then(Response => {
-                if (Response.headers.Account === null) {
+                if (Response.headers.account === null) {
                     alert('Le mot de passe et incorrect!');
-                    this.props.navigation.navigate('main');
+                   
                 } else {
-                    
+                    AsyncStorage.setItem('account', JSON.stringify(Response.headers.account));
+                    this.props.navigation.navigate('main');
+                    alert(JSON.stringify(Response.token));
                     
                 }
             })

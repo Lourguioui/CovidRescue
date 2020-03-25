@@ -30,8 +30,8 @@ export default class MainScreen extends React.Component {
     }
     componentDidMount(){
         axios.get('https://covidrescue-2.herokuapp.com/analysis/findAllOneLineCityStateCount')
-        .then(res => {
-            console.log(res.data);
+        .then(Response => {
+            console.log(JSON.stringify(Response));
         })
     }
     render() {
@@ -53,13 +53,13 @@ export default class MainScreen extends React.Component {
                     <Text style={styles.info}><FontAwesome5 name="stop-circle" size={24} color="#EF2929" /></Text>
                 </View>
                 <View style={styles.smallContainer}>
-                    <Text style={styles.info}><FontAwesome5 name="stop-circle" size={24} color="#EF2929" /></Text>
+                    <Text style={styles.info}><FontAwesome5 name="stop-circle" size={24} color="#000000" /></Text>
                 </View>
                 <View style={styles.smallContainer}>
-                    <Text style={styles.info}><FontAwesome5 name="stop-circle" size={24} color="#EF2929" /></Text>
+                    <Text style={styles.info}><FontAwesome5 name="stop-circle" size={24} color="#05AFF7" /></Text>
                 </View>
                 <View style={styles.smallContainer}>
-                    <Text style={styles.info}><FontAwesome5 name="stop-circle" size={24} color="#EF2929" /></Text>
+                    <Text style={styles.info}><FontAwesome5 name="stop-circle" size={24} color="#41C10C" /></Text>
                 </View>
             </View>
 
