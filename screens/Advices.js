@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as Font from 'expo-font';
 import FloattingActionButton from '../components/FloattingActionButton';
 import { FontAwesome5 } from '@expo/vector-icons';
-import QrCodeScanner from './QrCodeScanner';
+
 
 
 export default class Advices extends React.Component {
@@ -61,7 +61,7 @@ export default class Advices extends React.Component {
 
                     </ScrollView>
                     <TouchableOpacity
-                        onPress={this.props.navigation.navigate("QrScanner")}
+                        
                         style={{
                             borderWidth: 1,
                             borderColor: 'rgba(0,0,0,0.2)',

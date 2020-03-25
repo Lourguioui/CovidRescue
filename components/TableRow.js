@@ -24,6 +24,15 @@ export default class TableRow extends React.Component {
                 <View style={styles.smallContainer}>
                     <Text style={styles.info}>{this.props.suspected}</Text>
                 </View>
+                <View style={styles.smallContainer}>
+                    <Text style={styles.info}>{this.props.death}</Text>
+                </View>
+                <View style={styles.smallContainer}>
+                    <Text style={styles.info}>{this.props.cured}</Text>
+                </View>
+                <View style={styles.smallContainer}>
+                    <Text style={styles.info}>{this.props.healthy}</Text>
+                </View>
             </View>
         );
     }
@@ -36,9 +45,9 @@ const styles = StyleSheet.create({
         height: 50,
         borderBottomColor :'#00000009',
         borderBottomWidth:1,
-        width:'90%',
-        left:'5%',
-        right:'5%',
+        width:'95%',
+        left:'2.5%',
+        right:'2.5%',
     },
     smallContainer:{
         flex:1,
@@ -47,6 +56,7 @@ const styles = StyleSheet.create({
         justifyContent:'center'
     },
     info:{
-        textAlign:'center'
+        textAlign:'center',
+
     }
 })

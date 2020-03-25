@@ -8,6 +8,7 @@ import { IonIcons } from "@expo/vector-icons";
 import { Feather } from '@expo/vector-icons';
 import { createAppContainer } from 'react-navigation';
 import { NavigationContainer } from '@react-navigation/native';
+
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import SideBar from '../components/SideBar';
 import Advices from './Advices';
@@ -17,7 +18,6 @@ import Register from './Register';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import MainScreen from './MainScreen';
-
 
 
 
