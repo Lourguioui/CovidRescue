@@ -142,15 +142,15 @@ export default class Login extends React.Component {
                 } else {
                     AsyncStorage.setItem('account', JSON.stringify(Response.headers.account));
                     this.props.navigation.navigate('main');
-                    alert(JSON.stringify(Response.token));
+                    console.log(JSON.stringify(Response));
                     
                 }
             })
             .catch(error => {
                
-                alert(error);
+                alert('Le mot de passe et incorrect!');
             })
-            this.props.navigation.navigate('main');
+            
     }
 }
 const styles = StyleSheet.create({
