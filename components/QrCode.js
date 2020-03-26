@@ -11,15 +11,14 @@ import {
 } from 'react-native';
 
 export default class QrCode extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
+    
+        state = {
             phoneNumber: this.props.phoneNumber,
             accountState: this.props.accountState,
             QrCodeColor: '',
 
         };
-    }
+    
 
     componentDidMount() {
         let redColor = '#EF2929'
@@ -49,12 +48,19 @@ export default class QrCode extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <View>
 
+                </View>
                 <QRCode
-                    value={this.state.phoneNumber}
+                    value={this.props.phoneNumber}
                     size={200}
                     bgColor={this.state.QrCodeColor}
                     fgColor='white' />
+                <View>
+                    <View>
+
+                    </View>
+                </View>
             </View>
         );
     };

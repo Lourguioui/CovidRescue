@@ -15,7 +15,7 @@ export default class TableRow extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.smallContainer}>
+                <View style={styles.wilayaContainer}>
                     <Text style={styles.info}>{this.props.wilaya}</Text>
                 </View>
                 <View style={styles.smallContainer}>
@@ -45,9 +45,15 @@ const styles = StyleSheet.create({
         height: 50,
         borderBottomColor :'#00000009',
         borderBottomWidth:1,
-        width:'95%',
-        left:'2.5%',
-        right:'2.5%',
+        // width:'95%',
+        // left:'2.5%',
+        // right:'2.5%',
+    },
+    wilayaContainer:{
+        flex:2,
+        alignItems:'center',
+        height: 60,
+        justifyContent:'center'
     },
     smallContainer:{
         flex:1,

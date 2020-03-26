@@ -15,7 +15,7 @@ export default class Profile extends React.Component {
         }
     }
     componentDidMount() {
-        this._loadingAccount().done();
+        this._loadingAccount().done()
     }
     _loadingAccount = async () => {
         var Account = await AsyncStorage.getItem('account');
