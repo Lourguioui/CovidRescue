@@ -15,6 +15,7 @@ import Advices from './Advices';
 import QrCodeScanner from './QrCodeScanner';
 import Login from './Login';
 import Register from './Register';
+import Profile from './Profile';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import MainScreen from './MainScreen';
@@ -24,16 +25,23 @@ import MainScreen from './MainScreen';
 
 const DrawerNavigation = createDrawerNavigator(
     {
-        Home : {
-            screen:MainScreen,
-            navigationOptions:{
-                title:'Aceuil',
+        Home: {
+            screen: MainScreen,
+            navigationOptions: {
+                title: 'Aceuil',
                 drawerIcon: ({ tinColor }) => <Feather name='home' size={20} color={tinColor} />
 
             }
         },
-        Advices : {
-            screen : Advices,
+        Profile: {
+            screen: Profile,
+            navigationOptions: {
+                title: 'Profil',
+                drawerIcon: ({ tinColor }) => <Feather name='user' size={20} color={tinColor} />
+            }
+        },
+        Advices: {
+            screen: Advices,
             navigationOptions: {
                 title: 'Conseils',
                 drawerIcon: ({ tinColor }) => <Feather name='home' size={20} color={tinColor} />
@@ -55,14 +63,14 @@ const DrawerNavigation = createDrawerNavigator(
 
         },
         QrScanner: {
-            screen : QrCodeScanner,
-            navigationOptions:{
-                title : 'Scanner le Code QR',
+            screen: QrCodeScanner,
+            navigationOptions: {
+                title: 'Scanner le Code QR',
                 drawerIcon: ({ tinColor }) => <Feather name='scan' size={20} color={tinColor} />
 
             }
         }
-       
+
     },
     {
         contentComponent: props => <SideBar {...props} />

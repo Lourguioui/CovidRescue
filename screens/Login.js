@@ -109,30 +109,8 @@ export default class Login extends React.Component {
         
         
         let URL = `https://covidrescue-2.herokuapp.com/login?username=%2B${phoneNumber.toString().substr(1)}&password=${password}`;
-        alert(URL);
+        
 
-        // let bodyFormData = new FormData();
-        // bodyFormData.set('username',phoneNumber);
-        // bodyFormData.set('password',password);
-
-        // axios({
-        //     method: 'post',
-        //     url: 'https://covidrescue-2.herokuapp.com/login',
-        //     data: bodyFormData,
-        //     headers: {'Content-Type': 'multipart/form-data' }
-        //     })
-        //     .then(function (Response) {
-        //         //handle success
-        //         alert(JSON.stringify(Response.headers));
-        //         this.props.navigation.navigate('main');
-
-        //     })
-        //     .catch(function (error) {
-        //         //handle error
-        //         console.log(error);
-        //     });
-       
-        //     this.props.navigation.navigate('main');
 
         axios.post(URL)
             .then(Response => {
@@ -142,13 +120,13 @@ export default class Login extends React.Component {
                 } else {
                     AsyncStorage.setItem('account', JSON.stringify(Response.headers.account));
                     this.props.navigation.navigate('main');
-                    console.log(JSON.stringify(Response));
+                   
                     
                 }
             })
             .catch(error => {
                
-                alert('Le mot de passe et incorrect!');
+                alert('Le mot de passe est incorrect!');
             })
             
     }
