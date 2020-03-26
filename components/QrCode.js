@@ -1,38 +1,65 @@
 
- 
+
 import React, { Component } from 'react'
 import QRCode from 'react-native-qrcode-generator';
- 
+
 import {
-    
+
     StyleSheet,
     View,
     TextInput
 } from 'react-native';
- 
+
 export default class QrCode extends Component {
-  state = {
-    text: '213540',
-  };
- 
-  render() {
-    return (
-      <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          onChangeText={(text) => this.setState({text: text})}
-          value={this.state.text}
-        />
-        <QRCode
-          value={this.state.text}
-          size={200}
-          bgColor='black'
-          fgColor='white'/>
-      </View>
-    );
-  };
+    constructor(props) {
+        super(props);
+        this.state = {
+            phoneNumber: this.props.phoneNumber,
+            accountState: this.props.accountState,
+            QrCodeColor: '',
+
+        };
+    }
+
+    componentDidMount() {
+        let redColor = '#EF2929'
+        let orangeColor = '#E26D05'
+        let blueColor = '#05AFF7'
+        let greenColor = '#41C10C'
+        let blackColor = '#000000'
+        alert(this.state.phoneNumber);
+        if (this.state.accountState === 'HEALTHY') {
+            this.setState({ QrCodeColor: greenColor })
+        }
+        if (this.state.accountState === 'CONTAMINATED') {
+            this.setState({ QrCodeColor: redColor })
+        }
+        if (this.state.accountState === 'DEATH'){
+            this.setState({QrCodeColor : blackColor})
+        }
+        if (this.state.accountState === 'CURED'){
+            this.setState({QrCodeColor : blueColor})
+        }
+        if (this.state.accountState === 'SUSPECTED'){
+            this.setState({QrCodeColor : orangeColor})
+        }
+    }
+
+
+    render() {
+        return (
+            <View style={styles.container}>
+
+                <QRCode
+                    value={this.state.phoneNumber}
+                    size={200}
+                    bgColor={this.state.QrCodeColor}
+                    fgColor='white' />
+            </View>
+        );
+    };
 }
- 
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -40,7 +67,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
- 
+
     input: {
         height: 40,
         borderColor: 'gray',

@@ -9,28 +9,39 @@ export default class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: '',
-            lastName: '',
-            telephone: '',
-            state: ''
+            Account: {
+
+            }
         }
     }
+    componentDidMount() {
+        this._loadingAccount().done();
+    }
+    _loadingAccount = async () => {
+        var Account = await AsyncStorage.getItem('account');
+        var account = JSON.parse(Account);
+        this.setState({ Account: account });
 
-        render() {
-            return (
-                <View style={Styles.container}>
-                    <QrCode />
-                </View>
-            );
-        }
-   
+    }
+
+    render() {
+        return (
+            <View style={Styles.container}>
+                <QrCode
+                    phoneNumber={this.state.Account.phoneNumber}
+                    accountState={this.state.Account.accountState}
+                />
+            </View>
+        );
+    }
+
 }
 
 const Styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        justifyContent: 'center'
+        
 
     }
 })

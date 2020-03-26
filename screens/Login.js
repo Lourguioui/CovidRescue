@@ -114,15 +114,14 @@ export default class Login extends React.Component {
 
         axios.post(URL)
             .then(Response => {
-                if (Response.headers.account === null) {
-                    alert('Le mot de passe et incorrect!');
+                
                    
-                } else {
-                    AsyncStorage.setItem('account', JSON.stringify(Response.headers.account));
+                    console.log(JSON.stringify(Response.headers.account));
+                    AsyncStorage.setItem('account',Response.headers.account);
                     this.props.navigation.navigate('main');
                    
                     
-                }
+             
             })
             .catch(error => {
                
