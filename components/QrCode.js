@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical:10
+        paddingVertical:20
     },
 
     input: {

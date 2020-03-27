@@ -65,9 +65,7 @@ const styles = StyleSheet.create({
         height: 60,
         borderBottomColor: '#00000009',
         borderBottomWidth: 1,
-        // width:'95%',
-        // left:'2.5%',
-        // right:'2.5%',
+       
     },
     wilayaContainer: {
         flex: 2,

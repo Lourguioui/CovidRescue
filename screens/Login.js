@@ -109,7 +109,7 @@ export default class Login extends React.Component {
 
         const password = this.state.password;
         const phoneNumber = this.phone.getValue();
-        AsyncStorage.setItem('pw',password)
+        AsyncStorage.setItem('pw', password)
 
 
         let URL = `https://covidrescue-2.herokuapp.com/login?username=%2B${phoneNumber.toString().substr(1)}&password=${password}`;
@@ -120,7 +120,7 @@ export default class Login extends React.Component {
             .then(Response => {
 
 
-                console.log(JSON.stringify(Response.headers.account));
+
                 AsyncStorage.setItem('account', Response.headers.account);
                 this.props.navigation.navigate('main');
 

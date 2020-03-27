@@ -2,6 +2,7 @@ import React from 'react';
 
 import { StyleSheet, Text, View, Image, TouchableWithoutFeedback, StatusBar, TextInput, SafeAreaView, Keyboard, TouchableOpacity, KeyboardAvoidingView, ScrollView, AsyncStorage } from 'react-native';
 import QrCode from '../components/QrCode';
+import ProfileContent from '../components/ProfileContent';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 
@@ -11,18 +12,14 @@ export default class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            Account: {
-
-            },
+            Account: {},
             QrCodeColor: '',
         }
     }
     componentDidMount() {
-
-       
         this._loadingAccount()
-
     }
+
     _loadingAccount = async () => {
         let redColor = '#EF2929'
         let orangeColor = '#E26D05'
@@ -47,7 +44,6 @@ export default class Profile extends React.Component {
         if (this.state.Account.accountState === 'SUSPECTED') {
             this.setState({ QrCodeColor: orangeColor })
         }
-
     }
 
 
@@ -60,15 +56,18 @@ export default class Profile extends React.Component {
                         <FontAwesome5 name="bars" size={24} color="white" />
                     </TouchableOpacity>
                 </View>
-                <ScrollView style={Styles.container} showsHorizontalScrollIndicator={false}>
+                <ScrollView style={Styles.container} showsVerticalScrollIndicator={false}>
                     <QrCode
                         phoneNumber={this.state.Account.phoneNumber}
                         accountState={this.state.Account.accountState}
                         QrCodeColor={this.state.QrCodeColor}
                     />
-                    <View>
-
-                    </View>
+                    <ProfileContent
+                        firstName={this.state.Account.firstName}
+                        lastName={this.state.Account.famillyName}
+                        wilaya={this.state.Account.cityId}
+                        accountState={this.state.Account.accountState}
+                    />
                 </ScrollView>
                
             </View>
@@ -81,11 +80,9 @@ const Styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-
         backgroundColor: 'white',
-
-
     },
+
     qrContainer: {
         flex: 1,
         backgroundColor: 'white',
