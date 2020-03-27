@@ -27,7 +27,8 @@ export default class Login extends React.Component {
     _loadingInitialState = async () => {
         var value = await AsyncStorage.getItem('account');
         if (value !== null) {
-                this.props.navigation.navigate("main")
+            // axios.post(`https://covidrescue-2.herokuapp.com/login?username=%2B${value.phoneNumber.toString().substr(1)}&password=${value.password}`)
+            // this.props.navigation.navigate("main")
         }
     }
     selectCountry(country) {
@@ -96,60 +97,60 @@ export default class Login extends React.Component {
                 <TouchableOpacity style={styles.textContainer}>
                     <Text style={styles.textStyle}>Vous n'avez pas un compte? Inscrivez vous!</Text>
                 </TouchableOpacity>
-               
-              
+
+
 
             </View>
         );
     }
     login = () => {
-         
+
         const password = this.state.password;
         const phoneNumber = this.phone.getValue();
-        
-        
+
+
         let URL = `https://covidrescue-2.herokuapp.com/login?username=%2B${phoneNumber.toString().substr(1)}&password=${password}`;
-        
+
 
 
         axios.post(URL)
             .then(Response => {
-                
-                   
-                    console.log(JSON.stringify(Response.headers.account));
-                    AsyncStorage.setItem('account',Response.headers.account);
-                    this.props.navigation.navigate('main');
-                   
-                    
-             
+
+
+                console.log(JSON.stringify(Response.headers.account));
+                AsyncStorage.setItem('account', Response.headers.account);
+                this.props.navigation.navigate('main');
+
+
+
             })
             .catch(error => {
-               
+
                 alert('Le mot de passe est incorrect!');
             })
-            
+
     }
 }
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         backgroundColor: 'white',
-       
-       paddingBottom:100,
+
+        paddingBottom: 100,
         marginBottom: '0%',
-      
-      
+
+
     },
     container: {
         flex: 2,
         backgroundColor: 'white',
         flexDirection: 'column',
         padding: 0,
-       
-        
+
+
     },
     logoContainer: {
-        flex : 1,
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: 50,
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingBottom: 0,
         top: 20,
-       
+
 
 
     },

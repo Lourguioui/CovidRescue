@@ -15,13 +15,7 @@ export default class MainScreen extends React.Component {
         }
     }
     componentDidMount() {
-        this._loadData().done();
-        // axios.get('https://covidrescue-2.herokuapp.com/analysis/findAllOneLineCityStateCount')
-        //     .then(Response => {
-
-        //         this.setState({ stats: Response.data });
-        //         console.log(this.state.stats);
-        //     })
+        this._loadData().done(); 
     }
 
     _loadData = async () => {

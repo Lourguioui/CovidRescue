@@ -47,13 +47,7 @@ const DrawerNavigation = createDrawerNavigator(
                 drawerIcon: ({ tinColor }) => <Feather name='home' size={20} color={tinColor} />
             }
         },
-        Login: {
-            screen: Login,
-            navigationOptions: {
-                title: 'Profile',
-                drawerIcon: ({ tinColor }) => <Feather name='user' size={20} color={tinColor} />
-            }
-        },
+       
         Register: {
             screen: Register,
             navigationOptions: {
