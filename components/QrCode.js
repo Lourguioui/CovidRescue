@@ -26,7 +26,6 @@ export default class QrCode extends Component {
         let blueColor = '#05AFF7'
         let greenColor = '#41C10C'
         let blackColor = '#000000'
-        alert(this.state.phoneNumber);
         if (this.state.accountState === 'HEALTHY') {
             this.setState({ QrCodeColor: greenColor })
         }
@@ -47,19 +46,15 @@ export default class QrCode extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <View>
-
-                </View>
+            <View style={styles.qrContainer}>
+               
                 <QRCode
                     value={this.props.phoneNumber}
                     size={200}
-                    bgColor={this.state.QrCodeColor}
+                    bgColor={this.props.QrCodeColor}
                     fgColor='white' />
                 <View>
-                    <View>
-
-                    </View>
+                    
                 </View>
             </View>
         );
@@ -67,7 +62,7 @@ export default class QrCode extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    qrContainer: {
         flex: 1,
         backgroundColor: 'white',
         alignItems: 'center',
