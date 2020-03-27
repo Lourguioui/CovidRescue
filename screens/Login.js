@@ -26,9 +26,11 @@ export default class Login extends React.Component {
     }
     _loadingInitialState = async () => {
         var value = await AsyncStorage.getItem('account');
+        var password = await AsyncStorage.getItem('pw');
+        let account = JSON.parse(value)
         if (value !== null) {
-            // axios.post(`https://covidrescue-2.herokuapp.com/login?username=%2B${value.phoneNumber.toString().substr(1)}&password=${value.password}`)
-            // this.props.navigation.navigate("main")
+            axios.post(`https://covidrescue-2.herokuapp.com/login?username=%2B${account.phoneNumber.toString().substr(1)}&password=${password}`)
+            this.props.navigation.navigate("main")
         }
     }
     selectCountry(country) {
@@ -107,6 +109,7 @@ export default class Login extends React.Component {
 
         const password = this.state.password;
         const phoneNumber = this.phone.getValue();
+        AsyncStorage.setItem('pw',password)
 
 
         let URL = `https://covidrescue-2.herokuapp.com/login?username=%2B${phoneNumber.toString().substr(1)}&password=${password}`;
