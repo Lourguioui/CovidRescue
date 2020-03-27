@@ -2,7 +2,8 @@ import React from 'react';
 
 import { StyleSheet, Text, View, Image, TouchableWithoutFeedback, StatusBar, TextInput, SafeAreaView, Keyboard, TouchableOpacity, KeyboardAvoidingView, ScrollView, AsyncStorage } from 'react-native';
 import QrCode from '../components/QrCode';
-import QRCode from 'react-native-qrcode-generator';
+import { FontAwesome5 } from '@expo/vector-icons';
+
 
 
 
@@ -17,27 +18,10 @@ export default class Profile extends React.Component {
         }
     }
     componentDidMount() {
-        // let redColor = '#EF2929'
-        // let orangeColor = '#E26D05'
-        // let blueColor = '#05AFF7'
-        // let greenColor = '#41C10C'
-        // let blackColor = '#000000'
+
+       
         this._loadingAccount()
-        // if (this.state.Account.accountState == 'HEALTHY') {
-        //     this.setState({ QrCodeColor: greenColor })
-        // }
-        // if (this.state.Account.accountState == 'CONTAMINATED') {
-        //     this.setState({ QrCodeColor: redColor })
-        // }
-        // if (this.state.Account.accountState == 'DEATH'){
-        //     this.setState({QrCodeColor : blackColor})
-        // }
-        // if (this.state.Account.accountState == 'CURED'){
-        //     this.setState({QrCodeColor : blueColor})
-        // }
-        // if (this.state.Account.accountState == 'SUSPECTED'){
-        //     this.setState({QrCodeColor : orangeColor})
-        // }
+
     }
     _loadingAccount = async () => {
         let redColor = '#EF2929'
@@ -48,55 +32,45 @@ export default class Profile extends React.Component {
         var Account = await AsyncStorage.getItem('account');
         var account = JSON.parse(Account);
         this.setState({ Account: account });
-        alert(this.state.Account.phoneNumber);
         if (this.state.Account.accountState === 'HEALTHY') {
             this.setState({ QrCodeColor: greenColor })
         }
         if (this.state.Account.accountState === 'CONTAMINATED') {
             this.setState({ QrCodeColor: redColor })
         }
-        if (this.state.Account.accountState === 'DEATH'){
-            this.setState({QrCodeColor : blackColor})
+        if (this.state.Account.accountState === 'DEATH') {
+            this.setState({ QrCodeColor: blackColor })
         }
-        if (this.state.Account.accountState === 'CURED'){
-            this.setState({QrCodeColor : blueColor})
+        if (this.state.Account.accountState === 'CURED') {
+            this.setState({ QrCodeColor: blueColor })
         }
-        if (this.state.Account.accountState === 'SUSPECTED'){
-            this.setState({QrCodeColor : orangeColor})
+        if (this.state.Account.accountState === 'SUSPECTED') {
+            this.setState({ QrCodeColor: orangeColor })
         }
 
     }
-    // _qrColorHandler(){
-    //     let redColor = '#EF2929'
-    //     let orangeColor = '#E26D05'
-    //     let blueColor = '#05AFF7'
-    //     let greenColor = '#41C10C'
-    //     let blackColor = '#000000'
-    //     if (this.state.Account.accountState === 'HEALTHY') {
-    //         this.setState({ QrCodeColor: greenColor })
-    //     }
-    //     if (this.state.Account.accountState === 'CONTAMINATED') {
-    //         this.setState({ QrCodeColor: redColor })
-    //     }
-    //     if (this.state.Account.accountState === 'DEATH'){
-    //         this.setState({QrCodeColor : blackColor})
-    //     }
-    //     if (this.state.Account.accountState === 'CURED'){
-    //         this.setState({QrCodeColor : blueColor})
-    //     }
-    //     if (this.state.Account.accountState === 'SUSPECTED'){
-    //         this.setState({QrCodeColor : orangeColor})
-    //     }
-    // }
+
 
     render() {
         return (
             <View style={Styles.container}>
-                <QrCode
-                    phoneNumber={this.state.Account.phoneNumber}
-                    accountState={this.state.Account.accountState}
-                    QrCodeColor={this.state.QrCodeColor}
-                />
+               
+                <View style={{ flex: 0, backgroundColor: '#0573A0' }}>
+                    <TouchableOpacity style={{ alignItems: 'flex-start', margin: 16, marginTop: 30 }} onPress={this.props.navigation.openDrawer}>
+                        <FontAwesome5 name="bars" size={24} color="white" />
+                    </TouchableOpacity>
+                </View>
+                <ScrollView style={Styles.container} showsHorizontalScrollIndicator={false}>
+                    <QrCode
+                        phoneNumber={this.state.Account.phoneNumber}
+                        accountState={this.state.Account.accountState}
+                        QrCodeColor={this.state.QrCodeColor}
+                    />
+                    <View>
+
+                    </View>
+                </ScrollView>
+               
             </View>
         );
     }
@@ -107,7 +81,9 @@ const Styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        
+
+        backgroundColor: 'white',
+
 
     },
     qrContainer: {

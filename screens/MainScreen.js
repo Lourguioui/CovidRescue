@@ -15,12 +15,21 @@ export default class MainScreen extends React.Component {
         }
     }
     componentDidMount() {
-        axios.get('https://covidrescue-2.herokuapp.com/analysis/findAllOneLineCityStateCount')
+        this._loadData().done();
+        // axios.get('https://covidrescue-2.herokuapp.com/analysis/findAllOneLineCityStateCount')
+        //     .then(Response => {
+
+        //         this.setState({ stats: Response.data });
+        //         console.log(this.state.stats);
+        //     })
+    }
+
+    _loadData = async () => {
+        await axios.get('https://covidrescue-2.herokuapp.com/analysis/findAllOneLineCityStateCount')
             .then(Response => {
-                
-                this.setState({ stats: Response.data });
-                console.log(this.state.stats);
+                this.setState({ stats: Response.data })
             })
+
     }
     render() {
         return (
@@ -31,8 +40,12 @@ export default class MainScreen extends React.Component {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.headerContainer}>
-                    <View style={styles.smallContainer}>
-                        <Text style={styles.info}>Wilaya</Text>
+                    <View style={styles.wilayaContainer}>
+                        <Text style={styles.info, {
+                            left: -10, textAlign: 'center',
+                            fontFamily: 'Roboto',
+                            fontSize: 20,
+                        }}>Wilaya</Text>
                     </View>
                     <View style={styles.smallContainer}>
                         <Text style={styles.info}><FontAwesome5 name="stop-circle" size={24} color="#EF2929" /></Text>
@@ -100,6 +113,12 @@ const styles = StyleSheet.create({
         left: '5%',
         right: '5%',
     },
+    wilayaContainer: {
+        flex: 1.5,
+        alignItems: 'center',
+        height: 60,
+        justifyContent: 'center'
+    },
     smallContainer: {
         flex: 1,
         alignItems: 'center',
@@ -107,6 +126,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     info: {
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'Roboto',
+        fontSize: 40,
+
     }
 })

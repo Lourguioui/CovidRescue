@@ -50,7 +50,7 @@ export default class QrCode extends Component {
                
                 <QRCode
                     value={this.props.phoneNumber}
-                    size={200}
+                    size={300}
                     bgColor={this.props.QrCodeColor}
                     fgColor='white' />
                 <View>
@@ -66,7 +66,8 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        paddingVertical:10
     },
 
     input: {

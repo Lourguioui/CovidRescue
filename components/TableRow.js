@@ -19,19 +19,39 @@ export default class TableRow extends React.Component {
                     <Text style={styles.info}>{this.props.wilaya}</Text>
                 </View>
                 <View style={styles.smallContainer}>
-                    <Text style={styles.info}>{this.props.contaminated}</Text>
+                    <Text style={styles.info, {
+                        color: '#EF2929', textAlign: 'center',
+                        fontFamily: 'Roboto',
+                        fontSize: 17,
+                    }}>{this.props.contaminated}</Text>
                 </View>
                 <View style={styles.smallContainer}>
-                    <Text style={styles.info}>{this.props.suspected}</Text>
+                    <Text style={styles.info, {
+                        color: '#E26D05', textAlign: 'center',
+                        fontFamily: 'Roboto',
+                        fontSize: 17,
+                    }}>{this.props.suspected}</Text>
                 </View>
                 <View style={styles.smallContainer}>
-                    <Text style={styles.info}>{this.props.death}</Text>
+                    <Text style={styles.info, {
+                        color: '#000000', textAlign: 'center',
+                        fontFamily: 'Roboto',
+                        fontSize: 17,
+                    }}>{this.props.death}</Text>
                 </View>
                 <View style={styles.smallContainer}>
-                    <Text style={styles.info}>{this.props.cured}</Text>
+                    <Text style={styles.info, {
+                        color: '#05AFF7', textAlign: 'center',
+                        fontFamily: 'Roboto',
+                        fontSize: 17,
+                    }}>{this.props.cured}</Text>
                 </View>
                 <View style={styles.smallContainer}>
-                    <Text style={styles.info}>{this.props.healthy}</Text>
+                    <Text style={styles.info, {
+                        color: '#41C10C', textAlign: 'center',
+                        fontFamily: 'Roboto',
+                        fontSize: 17,
+                    }}>{this.props.healthy}</Text>
                 </View>
             </View>
         );
@@ -42,27 +62,29 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        height: 50,
-        borderBottomColor :'#00000009',
-        borderBottomWidth:1,
+        height: 60,
+        borderBottomColor: '#00000009',
+        borderBottomWidth: 1,
         // width:'95%',
         // left:'2.5%',
         // right:'2.5%',
     },
-    wilayaContainer:{
-        flex:2,
-        alignItems:'center',
+    wilayaContainer: {
+        flex: 2,
+        alignItems: 'center',
         height: 60,
-        justifyContent:'center'
+        justifyContent: 'center'
     },
-    smallContainer:{
-        flex:1,
-        alignItems:'center',
+    smallContainer: {
+        flex: 1,
+        alignItems: 'center',
         height: 60,
-        justifyContent:'center'
+        justifyContent: 'center'
     },
-    info:{
-        textAlign:'center',
+    info: {
+        textAlign: 'center',
+        fontFamily: 'Roboto',
+        fontSize: 20
 
     }
 })

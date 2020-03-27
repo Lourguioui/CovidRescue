@@ -27,7 +27,7 @@ export default class Login extends React.Component {
     _loadingInitialState = async () => {
         var value = await AsyncStorage.getItem('account');
         if (value !== null) {
-                
+                this.props.navigation.navigate("main")
         }
     }
     selectCountry(country) {
