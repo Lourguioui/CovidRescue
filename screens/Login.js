@@ -16,7 +16,7 @@ export default class Login extends React.Component {
         this.selectCountry = this.selectCountry.bind(this);
         this.state = {
             username: '',
-            password: '',
+            email: '',
             cca2: 'dz',
             countryModalOpen: false,
         }
@@ -28,10 +28,10 @@ export default class Login extends React.Component {
         var value = await AsyncStorage.getItem('account');
         var password = await AsyncStorage.getItem('pw');
         let account = JSON.parse(value)
-        if (value !== null) {
-            axios.post(`https://covidrescue-2.herokuapp.com/login?username=%2B${account.phoneNumber.toString().substr(1)}&password=${password}`)
-            this.props.navigation.navigate("main")
-        }
+        // if (value !== null) {
+        //     axios.post(`https://covidrescue-2.herokuapp.com/login?username=${account.email}&password=${password}`)
+        //     this.props.navigation.navigate("main")
+        // }
     }
     selectCountry(country) {
         this.phone.selectCountry(country.cca2.toLowerCase());
@@ -52,30 +52,13 @@ export default class Login extends React.Component {
                                     <Image source={require('../assets/Covid_logo.png')} />
 
                                 </View>
-                                <PhoneInput
-                                    ref={ref => {
-                                        this.phone = ref;
-                                    }}
+                                <TextInput 
+                                    placeholder='Adresse e-mail'
                                     style={styles.input}
-                                    initialCountry={'dz'}
-                                    onPressFlag={this.onPressFlag}
-
+                                    onChangeText={(email) => this.setState({email})}
                                 />
-                                <CountryPicker
 
-                                    modalProps={{
-                                        visible: this.state.countryModalOpen,
-                                    }}
-                                    onClose={() => this.setState({ countryModalOpen: false })}
-                                    onSelect={(country) =>
-                                        this.selectCountry(country)
-                                    }
-                                    onChange={value => this.selectCountry(value)}
-                                    translation="fr"
-                                    cca2={this.state.cca2}
-                                >
-                                    <View />
-                                </CountryPicker>
+                                
                                 <TextInput
                                     placeholder="Mot de passe"
                                     style={styles.input}
@@ -96,7 +79,7 @@ export default class Login extends React.Component {
 
                     </LinearGradient>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.textContainer}>
+                <TouchableOpacity style={styles.textContainer} onPress={this.props.navigation.navigate('Register')}>
                     <Text style={styles.textStyle}>Vous n'avez pas un compte? Inscrivez vous!</Text>
                 </TouchableOpacity>
 
@@ -108,11 +91,11 @@ export default class Login extends React.Component {
     login = () => {
 
         const password = this.state.password;
-        const phoneNumber = this.phone.getValue();
+        const email = this.state.email;
         AsyncStorage.setItem('pw', password)
 
 
-        let URL = `https://covidrescue-2.herokuapp.com/login?username=%2B${phoneNumber.toString().substr(1)}&password=${password}`;
+        let URL = `https://covidrescue-2.herokuapp.com/login?username=${email}&password=${password}`;
 
 
 
@@ -122,6 +105,7 @@ export default class Login extends React.Component {
 
 
                 AsyncStorage.setItem('account', Response.headers.account);
+                console.log(Response.headers.account);
                 this.props.navigation.navigate('main');
 
 
@@ -129,7 +113,7 @@ export default class Login extends React.Component {
             })
             .catch(error => {
 
-                alert('Le mot de passe est incorrect!');
+                alert(error);
             })
 
     }

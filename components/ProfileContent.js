@@ -19,13 +19,13 @@ export default class ProfileContent extends React.Component {
                     <Text style={styles.textItem}>{this.props.lastName} {this.props.firstName}</Text>
                 </View>
                 <View style={styles.itemContainer}>
-                    <Text style={styles.textItem}>Téléphone : 0780479252</Text>
+                    <Text style={styles.textItem}>E-mail : {this.props.email}</Text>
                 </View>
                 <View style={styles.itemContainer}>
                     <Text style={styles.textItem}>Wilaya : {this.props.wilaya}</Text>
                 </View>
                 <View style={styles.itemContainer}>
-                    <Text style={styles.textItem}>Etat : {this.props.accountState}</Text>
+                    <Text style={styles.textItem}>Etat :{this.props.accountState}</Text>
                 </View>
 
             </View>

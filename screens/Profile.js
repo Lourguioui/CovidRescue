@@ -14,6 +14,7 @@ export default class Profile extends React.Component {
         this.state = {
             Account: {},
             QrCodeColor: '',
+            accountState:''
         }
     }
     componentDidMount() {
@@ -27,21 +28,23 @@ export default class Profile extends React.Component {
         let greenColor = '#41C10C'
         let blackColor = '#000000'
         var Account = await AsyncStorage.getItem('account');
-        var account = JSON.parse(Account);
+        var account = JSON.parse(Account)
         this.setState({ Account: account });
-        if (this.state.Account.accountState === 'HEALTHY') {
+        this.setState({accountState : account.accountState.value})
+        
+        if (this.state.Account.accountState.key === 'HEALTHY') {
             this.setState({ QrCodeColor: greenColor })
         }
-        if (this.state.Account.accountState === 'CONTAMINATED') {
+        if (this.state.Account.accountState.key === 'CONTAMINATED') {
             this.setState({ QrCodeColor: redColor })
         }
-        if (this.state.Account.accountState === 'DEATH') {
+        if (this.state.Account.accountState.key === 'DEATH') {
             this.setState({ QrCodeColor: blackColor })
         }
-        if (this.state.Account.accountState === 'CURED') {
+        if (this.state.Account.accountState.key === 'CURED') {
             this.setState({ QrCodeColor: blueColor })
         }
-        if (this.state.Account.accountState === 'SUSPECTED') {
+        if (this.state.Account.accountState.key === 'SUSPECTED') {
             this.setState({ QrCodeColor: orangeColor })
         }
     }
@@ -58,15 +61,16 @@ export default class Profile extends React.Component {
                 </View>
                 <ScrollView style={Styles.container} showsVerticalScrollIndicator={false}>
                     <QrCode
-                        phoneNumber={this.state.Account.phoneNumber}
-                        accountState={this.state.Account.accountState}
+                        email={this.state.Account.email}
+                        
                         QrCodeColor={this.state.QrCodeColor}
                     />
                     <ProfileContent
                         firstName={this.state.Account.firstName}
+                        email={this.state.Account.email}
                         lastName={this.state.Account.famillyName}
                         wilaya={this.state.Account.cityId}
-                        accountState={this.state.Account.accountState}
+                        accountState={this.state.accountState}
                     />
                 </ScrollView>
                

@@ -6,6 +6,7 @@ import {BarCodeScanner} from 'expo-barcode-scanner';
 export default function QrCodeScanner() {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
+    const [data,setData] = useState(null);
     const [openScanner, setOpernScanner] = useState(false);
 
     useEffect(() => {
