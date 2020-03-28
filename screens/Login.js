@@ -79,7 +79,7 @@ export default class Login extends React.Component {
 
                     </LinearGradient>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.textContainer} onPress={this.props.navigation.navigate('Register')}>
+                <TouchableOpacity style={styles.textContainer} onPress={() => this.props.navigation.navigate('Register')}>
                     <Text style={styles.textStyle}>Vous n'avez pas un compte? Inscrivez vous!</Text>
                 </TouchableOpacity>
 
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderColor: '#03AFF7',
         borderWidth: 1,
-        borderRadius: 20,
+        borderRadius: 100,
         paddingHorizontal: 25
     },
     dropDown: {

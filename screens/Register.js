@@ -103,7 +103,7 @@ export default class Register extends React.Component {
 
                     </LinearGradient>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.textContainer}>
+                <TouchableOpacity style={styles.textContainer} onPress={() => this.props.navigation.navigate('Login')}>
                         <Text style={styles.textStyle}>Vous avez un compte? S'identifier</Text>
                 </TouchableOpacity>
             </View>
