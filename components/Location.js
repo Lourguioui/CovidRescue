@@ -20,17 +20,24 @@ export default class GPSLocation extends Component {
       this._getLocationAsync();
     }
   }
+  
+  componentDidMount(){
+    this._getLocationAsync().done();
+  }
 
   _getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== 'granted') {
+    if (status !== 'granted') {     
       this.setState({
         errorMessage: 'Permission to access location was denied',
       });
     }
 
     let location = await Location.getCurrentPositionAsync({});
+    console.log(location);
     this.setState({ location });
+    this.props.Latitude(location.coords.latitude)
+    this.props.Longitude(location.coords.longitude)
   };
 
   render() {
@@ -42,8 +49,8 @@ export default class GPSLocation extends Component {
     }
 
     return (
-      <View style={styles.container}>
-        <Text style={styles.paragraph}>{text}</Text>
+      <View style={{backgroundColor:'transparent'}}>
+        
       </View>
     );
   }
@@ -55,7 +62,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#ecf0f1',
+   
   },
   paragraph: {
     margin: 24,

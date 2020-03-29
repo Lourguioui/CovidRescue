@@ -29,7 +29,7 @@ export default class Login extends React.Component {
         var password = await AsyncStorage.getItem('pw');
         let account = JSON.parse(value)
         if (value !== null) {
-            axios.post(`https://covidrescue-2.herokuapp.com/login?username=${account.email}&password=${password}`)
+            await axios.post(`https://covidrescue-2.herokuapp.com/login?username=${account.email}&password=${password}`)
             this.props.navigation.navigate("main")
         }
     }
