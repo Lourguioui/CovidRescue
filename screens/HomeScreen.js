@@ -16,6 +16,7 @@ import QrCodeScanner from './QrCodeScanner';
 import Login from './Login';
 import Register from './Register';
 import Profile from './Profile';
+import GPSLocation from '../components/Location';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import MainScreen from './MainScreen';
@@ -63,6 +64,9 @@ const DrawerNavigation = createDrawerNavigator(
                 drawerIcon: ({ tinColor }) => <Feather name='scan' size={20} color={tinColor} />
 
             }
+        },
+        Location : {
+            screen : GPSLocation
         }
 
     },

@@ -28,10 +28,10 @@ export default class Login extends React.Component {
         var value = await AsyncStorage.getItem('account');
         var password = await AsyncStorage.getItem('pw');
         let account = JSON.parse(value)
-        // if (value !== null) {
-        //     axios.post(`https://covidrescue-2.herokuapp.com/login?username=${account.email}&password=${password}`)
-        //     this.props.navigation.navigate("main")
-        // }
+        if (value !== null) {
+            axios.post(`https://covidrescue-2.herokuapp.com/login?username=${account.email}&password=${password}`)
+            this.props.navigation.navigate("main")
+        }
     }
     selectCountry(country) {
         this.phone.selectCountry(country.cca2.toLowerCase());

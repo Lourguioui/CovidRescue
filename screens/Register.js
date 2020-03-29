@@ -7,7 +7,7 @@ import axios from 'axios';
 export default class Register extends React.Component {
     state = {
         wilaya: [
-            { label: 'Adrar', value: 'chigbjk' },
+            { label: 'Adrar', value: 'Adrar' },
             { label: 'Chlef', value: 'Chlef' },
             { label: 'Laghouat', value: 'Laghouat' },
             { label: 'Oum El Bouaghi', value: 'Oum El Bouaghi' },
@@ -76,10 +76,24 @@ export default class Register extends React.Component {
         passWord: '',
     }
     componentDidMount() {
-        
+        this._loadingData().done()
     }
 
     _loadingData = async () =>{
+        //  await axios('https://covidrescue-2.herokuapp.com/city/findAll')
+        //  .then(Response => {
+        //      let wilayas = Response.data
+        //      let i = 0
+        //      let citys = this.state.wilaya
+        //      for (i=0; wilayas.length; i++){
+        //             citys[i].label = wilayas[i].name
+        //             citys[i].value = wilayas[i].id
+        //      }
+        //      this.setState({wilayas : citys})
+            
+           
+           
+        //  })
 
     }
 
