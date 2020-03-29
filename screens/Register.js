@@ -44,12 +44,6 @@ export default class Register extends React.Component {
 
     _register = () => {
       const { firstName, lastName, email, password, cityId, townId } = this.state
-      // const firstName = 'Chouaib1'
-      // const lastName = 'Chouaib'
-      // const email = 'chouaib.hamek+1@gmail.com'
-      // const password = 'covidpass'
-      // const cityId = 1
-      // const townId = 1
       if (
           isNotEmpty(firstName) &&
           isNotEmpty(lastName) &&
