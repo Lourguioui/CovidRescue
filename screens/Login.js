@@ -43,7 +43,7 @@ export default class Login extends React.Component {
     render() {
         return (
             <View style={styles.mainContainer}>
-                <KeyboardAvoidingView behavior='padding' style={styles.container}>
+                <KeyboardAvoidingView behavior='height' style={styles.container}>
                     <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
                         <View style={styles.container}>
 
