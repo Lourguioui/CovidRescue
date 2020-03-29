@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { createAppContainer } from 'react-navigation';
@@ -7,6 +7,7 @@ import { Dimensions } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { IonIcons } from "@expo/vector-icons";
 import Advices from './screens/Advices';
+import { Font } from 'expo';
 import Register from './screens/Register';
 import Login from './screens/Login';
 
@@ -20,7 +21,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 const StackNavigator = createStackNavigator();
 
 export default function App(){
-  return(
+  useEffect(async () => {
+    await Font.loadAsync({
+      'Roboto': require('native-base/Fonts/Roboto.ttf'),
+      'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
+      ...Ionicons.font,
+    })
+  }, []);
+
+return(
     
   <NavigationContainer>
     <StackNavigator.Navigator initialRouteName = "Login" screenOptions={{headerShown:false, }}>
