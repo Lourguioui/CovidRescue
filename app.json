@@ -23,8 +23,23 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
+    "android": {
+      "splash": {
+        "mdpi": "./assets/drawable-mdpi/splash1.png",
+        "hdpi": "./assets/drawable-hdpi/splash2.png",
+        "xhdpi": "./assets/drawable-xhdpi/splash3.png",
+        "xxhdpi": "./assets/drawable-xxhdpi/splash4.png",
+        "xxxhdpi": "./assets/drawable-xxxhdpi/splash5.png",
+        "resizeMode": "cover"
+      }
+    },
+"ios": {
+      "splash": {
+        "image": "./assets/splash-ios.png",
+        "resizeMode": "cover"
+      },
       "supportsTablet": true
     }
+    
   }
 }
