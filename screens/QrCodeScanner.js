@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import GPSLocation from '../components/Location';
+import axios from 'axios';
 
 
 export default function QrCodeScanner() {
@@ -21,7 +22,9 @@ export default function QrCodeScanner() {
 
     const handleBarCodeScanned = ({ type, data }) => {
         setScanned(true);
-        alert(`Bar code with type ${type} and data ${data} has been scanned! longitude : ${longitude}`);
+        alert(`Bar code with type ${type} and data ${data} has been scanned! longitude : ${longitude} latitude : ${latitude}`);
+        axios.post("https://covidrescue-2.herokuapp.com/meeting",{latitude,longitude,data})
+        
     };
     if (!openScanner) {
         return (
