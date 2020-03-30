@@ -21,7 +21,16 @@ import Profile from './Profile';
 import { createStackNavigator } from '@react-navigation/stack';
 import MainScreen from './MainScreen';
 
+const StackAdvices = createStackNavigator();
 
+function AdvicesStack(){
+    return(
+        <StackAdvices.Navigator initialRouteName = "Advices" screenOptions={{headerShown:false, }}>
+            <StackAdvices.Screen name="Advices" component={Advices} />
+            <StackAdvices.Screen name='QrCodeScanner' component={QrCodeScanner} />
+        </StackAdvices.Navigator>
+    );
+}
 
 
 const DrawerNavigation = createDrawerNavigator(
@@ -42,7 +51,7 @@ const DrawerNavigation = createDrawerNavigator(
             }
         },
         Advices: {
-            screen: Advices,
+            screen: AdvicesStack,
             navigationOptions: {
                 title: 'Conseils',
                 drawerIcon: ({ tinColor }) => <Feather name='home' size={20} color={tinColor} />

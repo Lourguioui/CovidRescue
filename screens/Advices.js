@@ -84,7 +84,7 @@ export default class Advices extends React.Component {
 
                 </ScrollView>
                 <TouchableOpacity
-
+                    onPress={() => this.props.navigation.navigate('QrCodeScanner')}
                     style={{
                         borderWidth: 1,
                         borderColor: 'rgba(0,0,0,0.2)',
