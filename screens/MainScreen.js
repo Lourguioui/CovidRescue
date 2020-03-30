@@ -34,7 +34,7 @@ export default class MainScreen extends React.Component {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.headerContainer}>
-                    <View style={styles.wilayaContainer}>
+                    <View style={styles.wilayaContainer}>   
                         <Text style={styles.info, {
                             left: -10, textAlign: 'center',
                             fontFamily: 'Roboto',

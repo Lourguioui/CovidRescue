@@ -80,20 +80,7 @@ export default class Register extends React.Component {
     }
 
     _loadingData = async () =>{
-        //  await axios('https://covidrescue-2.herokuapp.com/city/findAll')
-        //  .then(Response => {
-        //      let wilayas = Response.data
-        //      let i = 0
-        //      let citys = this.state.wilaya
-        //      for (i=0; wilayas.length; i++){
-        //             citys[i].label = wilayas[i].name
-        //             citys[i].value = wilayas[i].id
-        //      }
-        //      this.setState({wilayas : citys})
-            
-           
-           
-        //  })
+      
 
     }
 
