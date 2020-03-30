@@ -11,14 +11,12 @@ import { FontAwesome5 } from '@expo/vector-icons';
 export default class Advices extends React.Component {
     constructor(props) {
         super(props);
-        this._navigate = this._navigate.bind(this);
+        
         this.state = {
             scannerOpened: false,
         }
     }
-    _navigate() {
-        this.props.navigation.navigate("QrScanner");
-    }
+    
     _openScanner() {
         const scannerOpened = !this.state.scannerOpened;
         this.setState({ scannerOpened });
@@ -83,27 +81,7 @@ export default class Advices extends React.Component {
                     </View>
 
                 </ScrollView>
-                <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('QrCodeScanner')}
-                    style={{
-                        borderWidth: 1,
-                        borderColor: 'rgba(0,0,0,0.2)',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: 60,
-                        position: 'absolute',
-                        bottom: 10,
-                        right: '3%',
-
-                        height: 60,
-
-                        borderRadius: 100,
-                    }}
-                >
-                    <LinearGradient start={{ x: 0, y: 0.75 }} end={{ x: 1, y: 0.25 }} colors={['#008AC3', '#02A3E5', '#00B5FF']} style={styles.gradient} >
-                        <Image source={require("../assets/Qr.png")} />
-                    </LinearGradient>
-                </TouchableOpacity>
+               
             </View>
         );
     }

@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableWithoutFeedback, StatusBar, Tex
 import { Dropdown } from 'react-native-material-dropdown';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Font from 'expo-font';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import { IonIcons } from "@expo/vector-icons";
 import { Feather } from '@expo/vector-icons';
 import { createAppContainer } from 'react-navigation';
@@ -21,14 +21,16 @@ import Profile from './Profile';
 import { createStackNavigator } from '@react-navigation/stack';
 import MainScreen from './MainScreen';
 
-const StackAdvices = createStackNavigator();
 
-function AdvicesStack(){
-    return(
-        <StackAdvices.Navigator initialRouteName = "Advices" screenOptions={{headerShown:false, }}>
-            <StackAdvices.Screen name="Advices" component={Advices} />
-            <StackAdvices.Screen name='QrCodeScanner' component={QrCodeScanner} />
-        </StackAdvices.Navigator>
+const StackMainScreen = createStackNavigator()
+
+
+function MainScreenStack() {
+    return (
+        < StackMainScreen.Navigator initialRouteName='MainScreen' screenOptions={{ headerShown: false, }}>
+            < StackMainScreen.Screen name='MainScreen' component={MainScreen} />
+            < StackMainScreen.Screen name='QrScanner' component={QrCodeScanner} />
+        </ StackMainScreen.Navigator>
     );
 }
 
@@ -36,10 +38,10 @@ function AdvicesStack(){
 const DrawerNavigation = createDrawerNavigator(
     {
         Home: {
-            screen: MainScreen,
+            screen: MainScreenStack,
             navigationOptions: {
                 title: 'Aceuil',
-                drawerIcon: ({ tinColor }) => <Feather name='home' size={20} color={tinColor} />
+                drawerIcon: ({ tinColor }) => <Feather name='home' size={25} color={tinColor} />
 
             }
         },
@@ -47,34 +49,35 @@ const DrawerNavigation = createDrawerNavigator(
             screen: Profile,
             navigationOptions: {
                 title: 'Profil',
-                drawerIcon: ({ tinColor }) => <Feather name='user' size={20} color={tinColor} />
+                drawerIcon: ({ tinColor }) => <Feather name='user' size={25} color={tinColor} />
             }
         },
         Advices: {
-            screen: AdvicesStack,
+            screen: Advices,
             navigationOptions: {
                 title: 'Conseils',
-                drawerIcon: ({ tinColor }) => <Feather name='home' size={20} color={tinColor} />
+                drawerIcon: ({ tinColor }) => <Feather name='list' size={25} color={tinColor} />
             }
-        },
-       
-        Register: {
-            screen: Register,
-            navigationOptions: {
-                title: 'Deconnexion',
-                drawerIcon: ({ tinColor }) => <Feather name='log-out' size={20} color={tinColor} />
-            }
-
         },
         QrScanner: {
             screen: QrCodeScanner,
             navigationOptions: {
                 title: 'Scanner le Code QR',
-                drawerIcon: ({ tinColor }) => <Feather name='scan' size={20} color={tinColor} />
+                drawerIcon: ({ tinColor }) => <FontAwesome name='qrcode' size={25} color={tinColor} />
 
             }
         },
-        
+
+        Register: {
+            screen: Register,
+            navigationOptions: {
+                title: 'Deconnexion',
+                drawerIcon: ({ tinColor }) => <Feather name='log-out' size={25} color={tinColor} />
+            }
+
+        },
+       
+
 
     },
     {

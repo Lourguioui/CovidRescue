@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableWithoutFeedback, StatusBar, Tex
 import TableRow from '../components/TableRow';
 import { FontAwesome5 } from '@expo/vector-icons';
 import axios from 'axios';
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default class MainScreen extends React.Component {
     constructor(props) {
@@ -71,6 +71,28 @@ export default class MainScreen extends React.Component {
                         />
                     ))}
                 </ScrollView>
+                <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('QrScanner')}
+                    style={{
+                        borderWidth: 1,
+                        borderColor: 'rgba(0,0,0,0.2)',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: 60,
+                        position: 'absolute',
+                        bottom: 10,
+                        right: '3%',
+                        zIndex:200,
+                        elevation:20,
+                        height: 60,
+
+                        borderRadius: 100,
+                    }}
+                >
+                    <LinearGradient start={{ x: 0, y: 0.75 }} end={{ x: 1, y: 0.25 }} colors={['#008AC3', '#02A3E5', '#00B5FF']} style={styles.gradient} >
+                        <Image source={require("../assets/Qr.png")} />
+                    </LinearGradient>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -106,6 +128,15 @@ const styles = StyleSheet.create({
         width: '90%',
         left: '5%',
         right: '5%',
+    },
+    gradient: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        height: '100%',
+        borderRadius: 100,
+        zIndex:200
     },
     wilayaContainer: {
         flex: 1.5,
