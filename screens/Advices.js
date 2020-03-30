@@ -19,72 +19,95 @@ export default class Advices extends React.Component {
     _navigate() {
         this.props.navigation.navigate("QrScanner");
     }
-    _openScanner(){
+    _openScanner() {
         const scannerOpened = !this.state.scannerOpened;
-        this.setState({scannerOpened });
+        this.setState({ scannerOpened });
     }
     render() {
-        
-            return (
-                <View style={styles.container}>
-                    <View style={{ flex: 0, backgroundColor: '#0573A0' }}>
-                        <TouchableOpacity style={{ alignItems: 'flex-start', margin: 16, marginTop: 30 }} onPress={this.props.navigation.openDrawer}>
-                            <FontAwesome5 name="bars" size={24} color="white" />
-                        </TouchableOpacity>
 
-                    </View>
-                    <ScrollView style={styles.container}>
-
-                        <View style={styles.logo}>
-                            <Image source={require("../assets/Covid_logo.png")} />
-                        </View>
-                        <View style={styles.titleContainer}>
-                            <Text style={styles.title}>
-                                Conseils des spécialists
-                        </Text>
-                        </View>
-                        <View style={styles.cardContainer}>
-                            <Text style={styles.textContainer}>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </Text>
-                        </View>
-                        <View style={styles.cardContainer}>
-                            <Text style={styles.textContainer}>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </Text>
-                        </View>
-                        <View style={styles.cardContainer}>
-                            <Text style={styles.textContainer}>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </Text>
-                        </View>
-
-                    </ScrollView>
-                    <TouchableOpacity
-                        
-                        style={{
-                            borderWidth: 1,
-                            borderColor: 'rgba(0,0,0,0.2)',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            width: 60,
-                            position: 'absolute',
-                            bottom: 10,
-                            right: '3%',
-
-                            height: 60,
-
-                            borderRadius: 100,
-                        }}
-                    >
-                        <LinearGradient start={{ x: 0, y: 0.75 }} end={{ x: 1, y: 0.25 }} colors={['#008AC3', '#02A3E5', '#00B5FF']} style={styles.gradient} >
-                            <Image source={require("../assets/Qr.png")} />
-                        </LinearGradient>
+        return (
+            <View style={styles.container}>
+                <View style={{ flex: 0, backgroundColor: '#0573A0' }}>
+                    <TouchableOpacity style={{ alignItems: 'flex-start', margin: 16, marginTop: 30 }} onPress={this.props.navigation.openDrawer}>
+                        <FontAwesome5 name="bars" size={24} color="white" />
                     </TouchableOpacity>
+
                 </View>
-            );
-        }
-    
+                <ScrollView style={styles.container}>
+
+                    <View style={styles.logo}>
+                        <Image source={require("../assets/Covid_logo.png")} />
+                    </View>
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.title}>
+                            Conseils des spécialists
+                        </Text>
+                    </View>
+                    <View style={styles.cardContainer}>
+                        <View style={styles.cardTitleContainer}>
+                            <Text style={styles.cardTitle}>
+                                ما هو فيروس كورونا؟
+                                </Text>
+                        </View>
+                        <Text style={styles.textContainer}>
+                            فيروس كورونا الجديد 2019 (2019-nCoV) هو فيروس جديد يسبب أمراض الجهاز التنفسي لدى البشر ويمكن أن ينتشر من شخص لآخر. تم التعرف على الفيروس لأول مرة خلال التحقيق في وباء في ووهان ، الصين.
+                        </Text>
+                        <View style={styles.cardTitleContainer}>
+                            <Text style={styles.cardTitle}>
+                            هل يمكن أن ينتقل الفيروس التاجي عن طريق الماء؟
+                                </Text>
+                        </View>
+                        <Text style={styles.textContainer}>
+                        حتى الآن، لم يتم الإبلاغ عن أي تلوث بالمياه.
+                        </Text>
+                    </View>
+                    <View style={styles.cardContainer}>
+                        <View style={styles.cardTitleContainer}>
+                            <Text style={styles.cardTitle}>
+                            ما هي الأعراض لدى شخص مصاب بفيروس كورونا الجديد؟
+                                </Text>
+                        </View>
+                        <Text style={styles.textContainer}>
+                        الأعراض الرئيسية هي الحمى والسعال أو ضيق في التنفس. في الحالات الأكثر شدة، قد يصاب المريض بضيق تنفسي حاد أو فشل كلوي حاد أو حتى فشل متعدد الحشوات يمكن أن يؤدي إلى الوفاة.
+                        </Text>
+                    </View>
+                    <View style={styles.cardContainer}>
+                        <View style={styles.cardTitleContainer}>
+                            <Text style={styles.cardTitle}>
+                            احم نفسك من المرض
+                                </Text>
+                        </View>
+                        <Text style={styles.textContainer}>
+                        تجنب المخالطة اللصقية مع الأشخاص المرضى و تجنب التعامل المباشر مع حيوانات المزرعة دون استخدام وسائل الوقاية الشخصية و تجنب البصق في الأماكن العامة , ولمس العين او الأنف أو الفم.
+                        </Text>
+                    </View>
+
+                </ScrollView>
+                <TouchableOpacity
+
+                    style={{
+                        borderWidth: 1,
+                        borderColor: 'rgba(0,0,0,0.2)',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: 60,
+                        position: 'absolute',
+                        bottom: 10,
+                        right: '3%',
+
+                        height: 60,
+
+                        borderRadius: 100,
+                    }}
+                >
+                    <LinearGradient start={{ x: 0, y: 0.75 }} end={{ x: 1, y: 0.25 }} colors={['#008AC3', '#02A3E5', '#00B5FF']} style={styles.gradient} >
+                        <Image source={require("../assets/Qr.png")} />
+                    </LinearGradient>
+                </TouchableOpacity>
+            </View>
+        );
+    }
+
 }
 const styles = StyleSheet.create({
     container: {
@@ -138,6 +161,7 @@ const styles = StyleSheet.create({
     },
     cardContainer: {
         flex: 1,
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white',
@@ -158,11 +182,27 @@ const styles = StyleSheet.create({
         marginLeft: '10%',
         marginRight: '10%'
     },
+    cardTitleContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
+        marginBottom: 10,
+        borderBottomColor: '#0000000F',
+        borderBottomWidth: 1,
+    },
+    cardTitle: {
+        textAlign: 'center',
+        fontFamily: 'Roboto',
+        fontSize: 25,
+        fontWeight: 'bold',
+    },
     textContainer: {
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
         overflow: 'hidden',
+        fontSize:17
     }
 
 })
