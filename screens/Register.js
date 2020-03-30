@@ -1,80 +1,39 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableWithoutFeedback, StatusBar, TextInput, SafeAreaView, Keyboard, TouchableOpacity, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { StyleSheet, Modal, TouchableHighlight, ActivityIndicator, Text, View, Image, TouchableWithoutFeedback, StatusBar, TextInput, SafeAreaView, Keyboard, TouchableOpacity, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Font from 'expo-font';
+import { Root } from 'native-base';
 import axios from 'axios';
+import _ from 'lodash';
+
+import { isNotEmpty } from '../services/fields.utils';
+import cities from '../constants/cities'
+import towns from '../constants/towns'
+
 export default class Register extends React.Component {
     state = {
-        wilaya: [
-            { label: 'Adrar', value: 'Adrar' },
-            { label: 'Chlef', value: 'Chlef' },
-            { label: 'Laghouat', value: 'Laghouat' },
-            { label: 'Oum El Bouaghi', value: 'Oum El Bouaghi' },
-            { label: 'Batna', value: 'Batna' },
-            { label: 'Béjaia', value: 'Béjaia' },
-            { label: 'Biskra', value: 'Biskra' },
-            { label: 'Béchar', value: 'Béchar' },
-            { label: 'Blida', value: 'Blida' },
-            { label: 'Bouira', value: 'Bouira' },
-            { label: 'Tamanrasset', value: 'Tamanrasset' },
-            { label: 'Tébessa', value: 'Tébessa' },
-            { label: 'Tlemcen', value: 'Tlemcen' },
-            { label: 'Tiaret', value: 'Tiaret' },
-            { label: 'Tizi Ouzou', value: 'Tizi Ouzou' },
-            { label: 'Alger', value: 'Alger' },
-            { label: 'Djelfa', value: 'Djelfa' },
-            { label: 'Jijel', value: 'Jijel' },
-            { label: 'Adrar', value: 'football' },
-            { label: ' Sétif', value: ' Sétif' },
-            { label: 'Saïda', value: 'Saïda' },
-            { label: 'Skikda', value: 'Skikda' },
-            { label: 'Sidi Bel Abbès', value: 'Sidi Bel Abbès' },
-            { label: 'Annaba', value: 'Annaba' },
-            { label: 'Guelma', value: 'Guelma' },
-            { label: 'Constantine', value: 'Constantine' },
-            { label: 'Médéa', value: 'Médéa' },
-            { label: 'Mostaganem', value: 'Mostaganem' },
-            { label: "M'Sila", value: "M'Sila" },
-            { label: 'Mascara', value: 'Mascara' },
-            { label: 'Ouargla ', value: 'Ouargla ' },
-            { label: 'Oran', value: 'Oran' },
-            { label: 'El Bayadh', value: 'El Bayadh' },
-            { label: 'Illizi', value: 'Illizi' },
-            { label: 'Bordj Bou Arreridj', value: 'Bordj Bou Arreridj' },
-            { label: 'Boumerdès', value: 'Boumerdès' },
-            { label: 'El Tarf', value: 'El Tarf' },
-            { label: 'Tindouf', value: 'Tindouf' },
-            { label: 'Tissemsilt', value: 'Tissemsilt' },
-            { label: 'El Oued ', value: 'El Oued ' },
-            { label: 'Baseball', value: 'baseball' },
-            { label: 'Khenchela', value: 'Khenchela' },
-            { label: 'Souk Ahras', value: 'Souk Ahras' },
-            { label: 'Mila', value: 'Mila' },
-            { label: 'Aïn Defla', value: 'Aïn Defla' },
-            { label: 'Naâma', value: 'Naâma' },
-            { label: 'Témouchent', value: 'Témouchent' },
-            { label: 'Ghardaïa', value: 'Ghardaïa' },
-            { label: 'Relizane', value: 'Relizane' },
-            { label: "El M'Ghair", value: "El M'Ghair" },
-            { label: 'El Meniaa', value: 'El Meniaa' },
-            { label: 'Ouled Djellal ', value: 'Ouled Djellal ' },
-            { label: 'Bordj Baji Mokhtar ', value: 'Bordj Baji Mokhtar ' },
-            { label: 'Béni Abbès ', value: 'Béni Abbès ' },
-            { label: 'Timimoun ', value: 'Timimoun ' },
-            { label: 'Touggourt ', value: 'Touggourt ' },
-            { label: 'Djanet', value: 'Djanet' },
-            { label: 'In Salah', value: 'In Salah' },
-            { label: 'In Guezzam', value: 'In Guezzam' },
-
-        ],
+        wilaya: _.map(cities, city => ({ label: city.name, value: city.id })),
+        town: [],
         firstName: '',
         lastName: '',
         mail: '',
-        cityId: 0,
-        townId: 0,
+        cityId: -1,
+        townId: -1,
         passWord: '',
+        success: false,
     }
+
+    _updateTowns(cityId) {
+      const townsPerCity = _.filter(towns, town => town.cityId === cityId)
+      const listDisplay =  _.map(townsPerCity, town => ({ label: town.name, value: town.id }))
+      
+      this.setState({
+        town: _.sortBy(listDisplay, ['label'])
+      })
+      
+    }
+
     componentDidMount() {
         this._loadingData().done()
     }
@@ -84,59 +43,180 @@ export default class Register extends React.Component {
 
     }
 
+    _register = () => {
+      const { firstName, lastName, email, password, cityId, townId } = this.state
+      if (
+          isNotEmpty(firstName) &&
+          isNotEmpty(lastName) &&
+          isNotEmpty(email) &&
+          isNotEmpty(password) &&
+          isNotEmpty(cityId) &&
+          isNotEmpty(townId)
+        ) {
+          const request = axios.post(
+            'https://covidrescue-2.herokuapp.com/pendingAccountRegistration', 
+            {
+              firstName,
+              famillyName: lastName,
+              email,
+              password,
+              cityId,
+              townId,
+            }
+          )
+          request
+          .then(response => {
+            this.setState({
+              error: undefined,
+              success: true,
+            })
+          })
+          .catch(error => {
+            alert(error)
+          })
+        } else {
+          this.setState({ error: 'Veuillez remplir tous les champs!' })
+        }
+    }
+
+    _handleTextChange = (fieldId, value) => {
+      switch(fieldId) {
+        case 1:
+          this.setState({ firstName: value, error: undefined })
+          break
+        case 2:
+          this.setState({ lastName: value, error: undefined })
+          break
+        case 3:
+          this.setState({ email: value, error: undefined })
+          break
+        case 4:
+          this.setState({ password: value, error: undefined })
+          break
+        case 5:
+          this.setState({ cityId: value, error: undefined })
+          this._updateTowns(value)
+          break
+        case 6:
+            this.setState({ townId: value, error: undefined })
+            break
+        default:
+          this.setState({ error: undefined })
+      }
+    }
+
     render() {
+      if (this.state.loading) {
         return (
-            <View style={styles.mainContainer}>
-
-                <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
-                    <View style={styles.container}>
-
-                        <ScrollView style={styles.formContainer}>
-                            <View style={styles.logoContainer}>
-                                <Image source={require('../assets/Covid_logo.png')} />
-
-                            </View>
-                            <TextInput placeholder="Nom" style={styles.input} onChangeText={(firstName) => this.setState({ firstName })} />
-                            <TextInput placeholder="Prénom" style={styles.input} onChangeText={(lastName) => this.setState({ lastName })} />
-                            <TextInput placeholder="Adresse E-mail" style={styles.input} onChangeText={(email) => this.setState({ email })} />
-                            <TextInput placeholder="Mot de passe" style={styles.input} secureTextEntry={true} onChangeText={(password) => this.setState({ password })} />
-                            <Dropdown
-                                style={styles.dropDown}
-                                label="Wilaya"
-                                data={this.state.wilaya}
-                                baseColor='#03AFF7'
-                                onChangeText={(value) =>{ this.setState({ cityId: value })
-                                alert(value)
-                            }}
-
-
-                            />
-                            <Dropdown
-                                style={styles.dropDown}
-                                label="Commune"
-                                data={this.state.wilaya}
-                                baseColor='#03AFF7'
-                                onChangeText={(value) => this.setState({ townId: value })}
-
-                            />
-                        </ScrollView>
-                    </View>
-                </TouchableWithoutFeedback>
-
-                <TouchableOpacity style={styles.buttonStyle}>
-                    <LinearGradient start={{ x: 0, y: 0.75 }} end={{ x: 1, y: 0.25 }} colors={['#008AC3', '#02A3E5', '#00B5FF']} style={styles.gradient} >
-                        <Text style={styles.buttonText}>S'inscrire</Text>
-
-                    </LinearGradient>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.textContainer} onPress={() => this.props.navigation.navigate('Login')}>
-                    <Text style={styles.textStyle}>Vous avez un compte? S'identifier</Text>
-                </TouchableOpacity>
-            </View>
+          <Root>
+            <AppLoading />
+          </Root>
         );
+      }
+      return (
+          <View style={styles.mainContainer}>
+              <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
+                  <View style={styles.container}>
+                      <ScrollView style={styles.formContainer}>
+                          <View style={styles.logoContainer}>
+                              <Image source={require('../assets/Covid_logo.png')} />
+
+                          </View>
+                          <TextInput placeholder="Nom" style={styles.input} onChangeText={(firstName) => this._handleTextChange(1, firstName)} />
+                          <TextInput placeholder="Prénom" style={styles.input} onChangeText={(lastName) => this._handleTextChange(2, lastName)} />
+                          <TextInput placeholder="Adresse E-mail" style={styles.input} onChangeText={(email) => this._handleTextChange(3, email)} />
+                          <TextInput placeholder="Mot de passe" style={styles.input} secureTextEntry={true} onChangeText={(password) => this._handleTextChange(4, password)} />
+                          <Dropdown
+                              style={styles.dropDown}
+                              label="Wilaya"
+                              data={this.state.wilaya}
+                              baseColor='#03AFF7'
+                              onChangeText={(value) => {
+                                this._handleTextChange(5, value)
+                              }}
+                          />
+                          <Dropdown
+                              style={styles.dropDown}
+                              label="Commune"
+                              data={this.state.town}
+                              baseColor='#03AFF7'
+                              onChangeText={(value) => this._handleTextChange(6, value)}
+
+                          />
+                      </ScrollView>
+                  </View>
+              </TouchableWithoutFeedback>
+              {this.state.error && (<Text style={styles.errorText}>{this.state.error}</Text>)}
+              <TouchableOpacity style={styles.buttonStyle} onPress={this._register}>
+                  <LinearGradient start={{ x: 0, y: 0.75 }} end={{ x: 1, y: 0.25 }} colors={['#008AC3', '#02A3E5', '#00B5FF']} style={styles.gradient} >
+                      <Text style={styles.buttonText}>S'inscrire</Text>
+
+                  </LinearGradient>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.textContainer} onPress={() => this.props.navigation.navigate('Login')}>
+                  <Text style={styles.textStyle}>Vous avez un compte? S'identifier</Text>
+              </TouchableOpacity>
+
+              <Modal
+                animationType="slide"
+                transparent={true}
+                visible={this.state.success}
+              >
+                <View style={styles.centeredView}>
+                  <View style={styles.modalView}>
+                    <Text style={{ ...styles.modalText, color: 'green' }}>l'inscription a été effectué avec succès.</Text>
+                    <Text style={styles.modalText}>Un e-mail de confirmation vous sera envoyé dans un instant.</Text>
+
+                    <TouchableHighlight
+                      style={styles.openButton}
+                      onPress={() => this.props.navigation.navigate('Login')}
+                    >
+                      <Text style={styles.textStyle}>S'identifier</Text>
+                    </TouchableHighlight>
+                  </View>
+                </View>
+              </Modal>
+          </View>
+      );
     }
 }
 const styles = StyleSheet.create({
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22
+    },
+    modalView: {
+      margin: 20,
+      backgroundColor: "white",
+      borderRadius: 20,
+      padding: 35,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5
+    },
+    modalText: {
+      marginBottom: 15,
+      textAlign: "center"
+    },
+    loginButton: {
+      backgroundColor: "#2196F3",
+      borderRadius: 20,
+      padding: 10,
+      elevation: 2
+    },
+    errorText: {
+      color: 'red',
+      marginBottom: 40,
+      textAlign: "center",
+    },
     mainContainer: {
         flex: 1,
         backgroundColor: 'white',
