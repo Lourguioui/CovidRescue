@@ -19,7 +19,7 @@ export default class MainScreen extends React.Component {
     }
 
     _loadData = async () => {
-        await axios.get('https://covidrescue-2.herokuapp.com/analysis/findAllOneLineCityStateCount')
+        await axios.get('https://covidrescue.app/covidrescue-main-backend/analysis/findAllOneLineCityStateCount')
             .then(Response => {
                 this.setState({ stats: Response.data })
             })

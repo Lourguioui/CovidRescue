@@ -54,7 +54,7 @@ export default class Register extends React.Component {
           isNotEmpty(townId)
         ) {
           const request = axios.post(
-            'https://covidrescue-2.herokuapp.com/pendingAccountRegistration', 
+            'https://covidrescue.app/covidrescue-main-backend/pendingAccountRegistration', 
             {
               firstName,
               famillyName: lastName,

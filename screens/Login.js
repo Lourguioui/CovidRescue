@@ -29,7 +29,7 @@ export default class Login extends React.Component {
         var password = await AsyncStorage.getItem('pw');
         let account = JSON.parse(value)
         if (value !== null) {
-            await axios.post(`https://covidrescue-2.herokuapp.com/login?username=${account.email}&password=${password}`)
+            await axios.post(`https://covidrescue.app/covidrescue-main-backend/login?username=${account.email}&password=${password}`)
             this.props.navigation.navigate("main")
         }
     }
@@ -95,7 +95,7 @@ export default class Login extends React.Component {
         AsyncStorage.setItem('pw', password)
 
 
-        let URL = `https://covidrescue-2.herokuapp.com/login?username=${email}&password=${password}`;
+        let URL = `https://covidrescue.app/covidrescue-main-backend/login?username=${email}&password=${password}`;
 
 
 
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
 
-        paddingBottom: 100,
+        paddingBottom: "20%",
         marginBottom: '0%',
 
 
@@ -140,11 +140,11 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 50,
+        marginBottom: "20%",
         height: 100,
         flex: 1,
         paddingBottom: 0,
-        top: 20,
+        top: '5%',
 
 
 
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
         right: 0,
         bottom: 0,
         padding: 20,
-        marginBottom: 20,
+        marginBottom: '7%',
 
     },
     input: {
@@ -166,8 +166,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderColor: '#03AFF7',
         borderWidth: 1,
-        borderRadius: 100,
-        paddingHorizontal: 25
+        borderRadius: 30,
+        paddingHorizontal: "10%"
     },
     dropDown: {
         borderColor: '#03AFF7',
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         height: '100%',
-        borderRadius: 100,
+        borderRadius: 30,
 
 
     },
