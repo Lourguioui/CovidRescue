@@ -17,6 +17,7 @@
     "expo-camera": "^8.0.0",
     "expo-font": "^8.0.0",
     "expo-linear-gradient": "~8.0.0",
+    "expo-location": "~8.0.0",
     "expo-permissions": "^8.0.0",
     "lodash": "^4.17.15",
     "native-base": "2.13.8",
@@ -25,6 +26,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
     "react-native-country-picker-modal": "^1.10.0",
     "react-native-custom-qr-codes-expo": "^2.2.0",
+    "react-native-dialog-input": "^1.0.7",
     "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "^1.5.6",
     "react-native-material-dropdown": "^0.11.1",
@@ -39,8 +41,7 @@
     "react-native-web": "~0.11.7",
     "react-native-webview": "^9.0.1",
     "react-navigation": "^4.3.1",
-    "react-navigation-drawer": "^2.4.5",
-    "expo-location": "~8.0.0"
+    "react-navigation-drawer": "^2.4.5"
   },
   "devDependencies": {
     "babel-preset-expo": "~8.0.0",

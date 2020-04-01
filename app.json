@@ -34,7 +34,6 @@
       },
       "packages" :"com.CovidRescue.CovidRescue",
       "versionCode" : 1,
-      "permissions" : [],
       "icons" : "./assets/Covid_logo.png"
 
       
