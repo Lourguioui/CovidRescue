@@ -32,9 +32,9 @@
         "xxxhdpi": "./assets/drawable-xxxhdpi/splash5.png",
         "resizeMode": "cover"
       },
-      "packages" :"com.CovidRescue.CovidRescue",
-      "versionCode" : 1,
-      "icons" : "./assets/Covid_logo.png"
+      "package" :"com.CovidRescue.CovidRescue",
+      "versionCode" : 1
+      
 
       
     },
