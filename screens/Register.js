@@ -24,6 +24,7 @@ export default class Register extends React.Component {
     success: false,
     confirmationCodeToken: null,
     isDialogVisible: false,
+    error: null,
   }
 
   _updateTowns(cityId) {
@@ -115,8 +116,17 @@ export default class Register extends React.Component {
     this.setState({ confirmationCodeToken: inputText })
     let mail = this.state.mail
     let token = this.state.confirmationCodeToken
-    axios.delete('https://covidrescue.app/covidrescue-main-backend/pendingAccountRegistration', { mail,token })
-    this.props.navigation.navigate('Login')
+    axios.delete('https://covidrescue.app/covidrescue-main-backend/pendingAccountRegistration', { mail, token })
+      .then(Respose => {
+
+      })
+      .catch(error => {
+        this.setState({ error })
+        alert(error)
+      })
+    if (this.state.error === null) {
+      this.props.navigation.navigate('Login')
+    }
   }
 
   render() {
