@@ -116,7 +116,7 @@ export default class Register extends React.Component {
     this.setState({ confirmationCodeToken: inputText })
     let mail = this.state.mail
     let token = this.state.confirmationCodeToken
-    axios.delete('https://covidrescue.app/covidrescue-main-backend/pendingAccountRegistration', { mail, token })
+    axios.delete('https://covidrescue.app/covidrescue-main-backend/pendingAccountRegistration', { email, token })
       .then(Respose => {
 
       })
