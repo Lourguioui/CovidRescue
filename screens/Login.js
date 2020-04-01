@@ -19,6 +19,7 @@ export default class Login extends React.Component {
             email: '',
             cca2: 'dz',
             countryModalOpen: false,
+            error: null,
         }
     }
     componentDidMount() {
@@ -30,7 +31,16 @@ export default class Login extends React.Component {
         let account = JSON.parse(value)
         if (value !== null) {
             await axios.post(`https://covidrescue.app/covidrescue-main-backend/login?username=${account.email}&password=${password}`)
-            this.props.navigation.navigate("main")
+                .then(Response => {
+
+                })
+                .catch(error => {
+                   
+                    this.setState({ error })
+                })
+            if (this.state.error === null) {
+                this.props.navigation.navigate("main")
+            }
         }
     }
     selectCountry(country) {
@@ -52,13 +62,13 @@ export default class Login extends React.Component {
                                     <Image source={require('../assets/Covid_logo.png')} />
 
                                 </View>
-                                <TextInput 
+                                <TextInput
                                     placeholder='Adresse e-mail'
                                     style={styles.input}
-                                    onChangeText={(email) => this.setState({email})}
+                                    onChangeText={(email) => this.setState({ email })}
                                 />
 
-                                
+
                                 <TextInput
                                     placeholder="Mot de passe"
                                     style={styles.input}
@@ -92,19 +102,19 @@ export default class Login extends React.Component {
 
         const password = this.state.password;
         const email = this.state.email;
-        AsyncStorage.setItem('pw', password)
+       
 
 
         let URL = `https://covidrescue.app/covidrescue-main-backend/login?username=${email}&password=${password}`;
 
-     
+
 
 
         axios.post(URL)
             .then(Response => {
 
 
-
+                AsyncStorage.setItem('pw', password)
                 AsyncStorage.setItem('account', Response.headers.account);
                 console.log(Response.headers.account);
                 this.props.navigation.navigate('main');
