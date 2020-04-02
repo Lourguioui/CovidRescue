@@ -73,7 +73,6 @@ export default class Login extends React.Component {
                                     placeholder="Mot de passe"
                                     style={styles.input}
                                     secureTextEntry={true}
-                                    // onChange={(password) => this.setState({ password: password })}
                                     onChangeText={(password) => this.setState({ password })}
                                 />
 

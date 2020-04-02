@@ -17,14 +17,14 @@ export default class Register extends React.Component {
     town: [],
     firstName: '',
     lastName: '',
-    mail: '',
+    email: '',
     cityId: -1,
     townId: -1,
     passWord: '',
     success: false,
     confirmationCodeToken: null,
     isDialogVisible: false,
-    error: null,
+    confirmationError: null,
   }
 
   _updateTowns(cityId) {
@@ -114,17 +114,19 @@ export default class Register extends React.Component {
   }
   _submitConfirmation(inputText) {
     this.setState({ confirmationCodeToken: inputText })
-    let mail = this.state.mail
-    let token = this.state.confirmationCodeToken
-    axios.delete('https://covidrescue.app/covidrescue-main-backend/pendingAccountRegistration', { email, token })
-      .then(Respose => {
-
+    let email = this.state.email
+    let token = inputText
+    console.log(email)
+    console.log(token)
+    axios.delete(`https://covidrescue.app/covidrescue-main-backend/pendingAccountRegistration?email=${email}&token=${token}`)
+      .then(Response => {
+          
       })
       .catch(error => {
-        this.setState({ error })
-        alert(error)
+        this.setState({ confirmationError : error })
+        console.log(JSON.stringify(error))
       })
-    if (this.state.error === null) {
+    if (this.state.confirmationError === null) {
       this.props.navigation.navigate('Login')
     }
   }
@@ -173,7 +175,7 @@ export default class Register extends React.Component {
         {this.state.error && (<Text style={styles.errorText}>{this.state.error}</Text>)}
         <TouchableOpacity style={styles.buttonStyle} onPress={this._register}>
           <LinearGradient start={{ x: 0, y: 0.75 }} end={{ x: 1, y: 0.25 }} colors={['#008AC3', '#02A3E5', '#00B5FF']} style={styles.gradient} >
-            <Text style={styles.buttonText}>S'inscrire</Text>
+            <Text style={styles.buttonText}>S'inscrir</Text>
 
           </LinearGradient>
         </TouchableOpacity>
