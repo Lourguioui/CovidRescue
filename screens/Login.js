@@ -57,11 +57,11 @@ export default class Login extends React.Component {
     }
     _keyboardDidShow() {
         let padding = "0%"
-        alert('Keyboard Shown');
+      
     }
     _keyboardDidHide() {
         let padding = "20%"
-        alert('Keyboard Shown');
+         
     }
 
     componentWillUnmount() {
@@ -150,11 +150,8 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         backgroundColor: 'white',
-
-
         marginBottom: '0%',
-
-
+       
     },
     container: {
         flex: 2,
@@ -180,7 +177,8 @@ const styles = StyleSheet.create({
     formContainer: {
         position: 'absolute',
 
-
+       top:'10%',
+       paddingBottom : 0,
         left: 0,
         right: 0,
         bottom: 0,
