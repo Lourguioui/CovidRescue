@@ -1,13 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableWithoutFeedback, StatusBar, TextInput, SafeAreaView, Keyboard, TouchableOpacity, KeyboardAvoidingView, ScrollView, AsyncStorage } from 'react-native';
-import { Dropdown } from 'react-native-material-dropdown';
+import { StyleSheet, Text, View, Image, TouchableHighlight, TouchableWithoutFeedback, TextInput, Keyboard, TouchableOpacity, ScrollView, AsyncStorage } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import * as Font from 'expo-font';
-import authUser from '../services/api';
 import axios from 'axios';
-import FloattingActionButton from '../components/FloattingActionButton';
-import PhoneInput from "react-native-phone-input";
-import CountryPicker from 'react-native-country-picker-modal';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { Fumi } from 'react-native-textinput-effects';
+import { Button } from 'react-native-paper';
+import { isEmailValid, isPasswordValid } from '../services/fields.utils';
+import { BLUE_THEME_COLOR, ERROR_THEME_COLOR, BUTTON_BACKGROUND_COLOR } from '../constants/theme';
+import { Snackbar } from 'react-native-paper';
 
 export default class Login extends React.Component {
     constructor(props) {
@@ -20,17 +20,14 @@ export default class Login extends React.Component {
             cca2: 'dz',
             countryModalOpen: false,
             error: null,
-            mainContainerPadding: '20%'
+            loginLoading: false,
+            errorLogin: null,
         }
     }
     componentDidMount() {
-       
-
         this._loadingInitialState().done();
     }
     _loadingInitialState = async () => {
-        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
-        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
         var value = await AsyncStorage.getItem('account');
         var password = await AsyncStorage.getItem('pw');
         let account = JSON.parse(value)
@@ -55,95 +52,134 @@ export default class Login extends React.Component {
     onPressFlag() {
         this.setState({ countryModalOpen: true });
     }
-    _keyboardDidShow() {
-        let padding = "0%"
-      
-    }
-    _keyboardDidHide() {
-        let padding = "20%"
-         
-    }
+    _onDismissSnackBar = () => this.setState({ loginError: null });
+    login = () => {
+      const { email, password } = this.state
+      console.log('LOGIN WITH: ', { email, password })
+      const newState = {}
+      if (!isEmailValid(email)) {
+        newState.emailError = 'Adresse email non valide!'
+      }
+      if (!isPasswordValid(password)) {
+        newState.passwordError = '6 caractères minimum'
+      }
+      if (newState.emailError || newState.passwordError) {
+        this.setState({ ...newState })
+        return
+      }
+      const URL = `https://covidrescue.app/covidrescue-main-backend/login?username=${email}&password=${password}`;
+      this.setState({ loginLoading: true })
+      axios.post(URL)
+          .then(Response => {
+              AsyncStorage.setItem('pw', password)
+              AsyncStorage.setItem('account', Response.headers.account);
+              console.log(Response.headers.account);
+              this.setState({ loginLoading: false })
+              this.props.navigation.navigate('main');
 
-    componentWillUnmount() {
-        this.keyboardDidShowListener.remove();
-        this.keyboardDidHideListener.remove();
+          })
+          .catch(error => {
+            console.log('LOGIN ERROR', error.response)
+            this.setState({ loginError: error.response, loginLoading: false })
+          })
     }
     render() {
-        return (
-            <View style={[styles.mainContainer, { paddingBottom: this.state.mainContainerPadding }]}>
+      const { emailError, passwordError } = this.state
+      const emailLabel = emailError || 'Adresse e-mail'
+      const passwordLabel = passwordError || 'Mot de passe'
+      return (
+          <View style={[styles.mainContainer, { paddingBottom: this.state.mainContainerPadding }]}>
 
-                <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
-                    <View style={styles.container}>
+              <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
+                  <View style={styles.container}>
 
-                        <ScrollView style={styles.formContainer}>
-                            <View style={styles.logoContainer}>
-                                <Image source={require('../assets/Covid_logo.png')} />
+                      <ScrollView style={styles.formContainer}>
+                          <View style={styles.logoContainer}>
+                              <Image source={require('../assets/Covid_logo.png')} />
 
-                            </View>
-                            <TextInput
-                                placeholder='Adresse e-mail'
-                                style={styles.input}
-                                onChangeText={(email) => this.setState({ email })}
-                            />
+                          </View>
+                          <Fumi
+                            style={{
+                              backgroundColor: emailError ? undefined : BUTTON_BACKGROUND_COLOR,
+                              borderColor: ERROR_THEME_COLOR,
+                              borderWidth: emailError ? 0.5 : 0,
+                              marginTop: 10,
+                            }}
+                            labelStyle={emailError ? { color: ERROR_THEME_COLOR } : undefined}
+                            label={emailLabel}
+                            iconClass={FontAwesomeIcon}
+                            iconName={'envelope'}
+                            iconColor={emailError ? ERROR_THEME_COLOR : BLUE_THEME_COLOR}
+                            iconSize={20}
+                            iconWidth={40}
+                            inputPadding={16}
+                            onChangeText={(email) => this.setState({ email, emailError: null, loginError: null })}
+                          />
 
+                          <Fumi
+                            style={{
+                              backgroundColor: passwordError ? undefined : BUTTON_BACKGROUND_COLOR,
+                              borderColor: ERROR_THEME_COLOR,
+                              borderWidth: passwordError ? 0.5 : 0,
+                              marginTop: 10,
+                            }}
+                            labelStyle={passwordError ? { color: ERROR_THEME_COLOR } : undefined}
+                            label={passwordLabel}
+                            iconClass={FontAwesomeIcon}
+                            iconName={'lock'}
+                            iconColor={passwordError ? ERROR_THEME_COLOR : BLUE_THEME_COLOR}
+                            iconSize={20}
+                            iconWidth={40}
+                            inputPadding={16}
+                            secureTextEntry={true}
+                            onChangeText={(password) => this.setState({ password, passwordError: null, loginError: null })}
+                          />
+                      </ScrollView>
+                  </View>
+              </TouchableWithoutFeedback>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={this.login}
+              >
+                <Button
+                  icon="login"
+                  mode="contained"
+                  color={BLUE_THEME_COLOR}
+                  style={styles.buttonStyle}
+                  loading={this.state.loginLoading}
+                >
+                S'identifier
+              </Button>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Register')}
+              >
+                <Button
+                  mode="outlined"
+                  color={BLUE_THEME_COLOR}
+                  style={styles.buttonStyle}
+                >
+                  S'inscrir
+                </Button>
+                <Snackbar
+                  visible={this.state.loginError}
+                  onDismiss={this._onDismissSnackBar}
+                  duration={3000}
+                  style={{
+                    backgroundColor: BLUE_THEME_COLOR,
+                    opacity: 0.9,
+                  }}
+                  action={{
+                    label: 'Dismiss',
+                    onPress: () => this._onDismissSnackBar,
+                  }}
+                >
+                  Error! Try again alter
+                </Snackbar>
+              </TouchableOpacity>
 
-                            <TextInput
-                                placeholder="Mot de passe"
-                                style={styles.input}
-                                secureTextEntry={true}
-                                onChangeText={(password) => this.setState({ password })}
-                            />
-
-
-
-                        </ScrollView>
-                    </View>
-                </TouchableWithoutFeedback>
-
-                <TouchableOpacity style={styles.buttonStyle} onPress={this.login}>
-                    <LinearGradient start={{ x: 0, y: 0.75 }} end={{ x: 1, y: 0.25 }} colors={['#008AC3', '#02A3E5', '#00B5FF']} style={styles.gradient} >
-                        <Text style={styles.buttonText}>S'identifier</Text>
-
-                    </LinearGradient>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.textContainer} onPress={() => this.props.navigation.navigate('Register')}>
-                    <Text style={styles.textStyle}>Vous n'avez pas un compte? Inscrivez vous!</Text>
-                </TouchableOpacity>
-
-
-
-            </View>
-        );
-    }
-    login = () => {
-
-        const password = this.state.password;
-        const email = this.state.email;
-
-
-
-        let URL = `https://covidrescue.app/covidrescue-main-backend/login?username=${email}&password=${password}`;
-
-
-
-
-        axios.post(URL)
-            .then(Response => {
-
-
-                AsyncStorage.setItem('pw', password)
-                AsyncStorage.setItem('account', Response.headers.account);
-                console.log(Response.headers.account);
-                this.props.navigation.navigate('main');
-
-
-
-            })
-            .catch(error => {
-
-                alert(error);
-            })
-
+          </View>
+      );
     }
 }
 const styles = StyleSheet.create({
@@ -165,25 +201,22 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: "20%",
+        marginBottom: "10%",
         height: 100,
         flex: 1,
         paddingBottom: 0,
         top: '5%',
-
-
-
+        marginBottom: '10%'
     },
     formContainer: {
-        position: 'absolute',
+      position: 'absolute',
 
-       top:'10%',
-       paddingBottom : 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        padding: 20,
-        marginBottom: '7%',
+      top:'10%',
+      paddingBottom : 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      padding: 20,
 
     },
     input: {
@@ -201,17 +234,13 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     buttonStyle: {
-        height: 50,
-        borderWidth: 1,
-        borderColor: 'rgba(0,0,0,0.0)',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 320,
-        marginLeft: 22,
-        bottom: 20,
-        borderRadius: 20,
-
-
+      marginBottom: 10,
+      height: 50,
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: 320,
+      marginLeft: 'auto',
+      marginRight: 'auto',
     },
     gradient: {
         flex: 1,
