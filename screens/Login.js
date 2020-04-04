@@ -20,12 +20,17 @@ export default class Login extends React.Component {
             cca2: 'dz',
             countryModalOpen: false,
             error: null,
+            mainContainerPadding: '20%'
         }
     }
     componentDidMount() {
+       
+
         this._loadingInitialState().done();
     }
     _loadingInitialState = async () => {
+        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
         var value = await AsyncStorage.getItem('account');
         var password = await AsyncStorage.getItem('pw');
         let account = JSON.parse(value)
@@ -35,7 +40,7 @@ export default class Login extends React.Component {
 
                 })
                 .catch(error => {
-                   
+
                     this.setState({ error })
                 })
             if (this.state.error === null) {
@@ -50,38 +55,51 @@ export default class Login extends React.Component {
     onPressFlag() {
         this.setState({ countryModalOpen: true });
     }
+    _keyboardDidShow() {
+        let padding = "0%"
+        alert('Keyboard Shown');
+    }
+    _keyboardDidHide() {
+        let padding = "20%"
+        alert('Keyboard Shown');
+    }
+
+    componentWillUnmount() {
+        this.keyboardDidShowListener.remove();
+        this.keyboardDidHideListener.remove();
+    }
     render() {
         return (
-            <View style={styles.mainContainer}>
-                <KeyboardAvoidingView behavior='padding' style={styles.container}>
-                    <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
-                        <View style={styles.container}>
+            <View style={[styles.mainContainer, { paddingBottom: this.state.mainContainerPadding }]}>
 
-                            <ScrollView style={styles.formContainer}>
-                                <View style={styles.logoContainer}>
-                                    <Image source={require('../assets/Covid_logo.png')} />
+                <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
+                    <View style={styles.container}>
 
-                                </View>
-                                <TextInput
-                                    placeholder='Adresse e-mail'
-                                    style={styles.input}
-                                    onChangeText={(email) => this.setState({ email })}
-                                />
+                        <ScrollView style={styles.formContainer}>
+                            <View style={styles.logoContainer}>
+                                <Image source={require('../assets/Covid_logo.png')} />
 
-
-                                <TextInput
-                                    placeholder="Mot de passe"
-                                    style={styles.input}
-                                    secureTextEntry={true}
-                                    onChangeText={(password) => this.setState({ password })}
-                                />
+                            </View>
+                            <TextInput
+                                placeholder='Adresse e-mail'
+                                style={styles.input}
+                                onChangeText={(email) => this.setState({ email })}
+                            />
 
 
+                            <TextInput
+                                placeholder="Mot de passe"
+                                style={styles.input}
+                                secureTextEntry={true}
+                                onChangeText={(password) => this.setState({ password })}
+                            />
 
-                            </ScrollView>
-                        </View>
-                    </TouchableWithoutFeedback>
-                </KeyboardAvoidingView>
+
+
+                        </ScrollView>
+                    </View>
+                </TouchableWithoutFeedback>
+
                 <TouchableOpacity style={styles.buttonStyle} onPress={this.login}>
                     <LinearGradient start={{ x: 0, y: 0.75 }} end={{ x: 1, y: 0.25 }} colors={['#008AC3', '#02A3E5', '#00B5FF']} style={styles.gradient} >
                         <Text style={styles.buttonText}>S'identifier</Text>
@@ -101,7 +119,7 @@ export default class Login extends React.Component {
 
         const password = this.state.password;
         const email = this.state.email;
-       
+
 
 
         let URL = `https://covidrescue.app/covidrescue-main-backend/login?username=${email}&password=${password}`;
@@ -133,7 +151,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
 
-        paddingBottom: "20%",
+
         marginBottom: '0%',
 
 
@@ -176,6 +194,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderColor: '#03AFF7',
         borderWidth: 1,
+
         borderRadius: 30,
         paddingHorizontal: "10%"
     },
