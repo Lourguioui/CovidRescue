@@ -27,7 +27,7 @@ export default class Login extends React.Component {
         }
     }
     componentDidMount() {
-        // this._loadingInitialState().done();
+        this._loadingInitialState().done();
     }
     _loadingInitialState = async () => {
         var value = await AsyncStorage.getItem('account');
