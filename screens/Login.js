@@ -2,12 +2,14 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableHighlight, TouchableWithoutFeedback, TextInput, Keyboard, TouchableOpacity, ScrollView, AsyncStorage } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import axios from 'axios';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Fumi } from 'react-native-textinput-effects';
 import { Button } from 'react-native-paper';
 import { isEmailValid, isPasswordValid } from '../services/fields.utils';
+import { getErrorMessage } from '../services/errors.utils.js'
 import { BLUE_THEME_COLOR, ERROR_THEME_COLOR, BUTTON_BACKGROUND_COLOR } from '../constants/theme';
 import { Snackbar } from 'react-native-paper';
+import { pathOr } from 'rambda'
 
 export default class Login extends React.Component {
     constructor(props) {
@@ -25,7 +27,7 @@ export default class Login extends React.Component {
         }
     }
     componentDidMount() {
-        this._loadingInitialState().done();
+        // this._loadingInitialState().done();
     }
     _loadingInitialState = async () => {
         var value = await AsyncStorage.getItem('account');
@@ -52,12 +54,14 @@ export default class Login extends React.Component {
     onPressFlag() {
         this.setState({ countryModalOpen: true });
     }
+
     _onDismissSnackBar = () => this.setState({ loginError: null });
-    login = () => {
+    
+    _login = () => {
       const { email, password } = this.state
-      console.log('LOGIN WITH: ', { email, password })
+      const emailValue = pathOr(this.state.email, ['route', 'params', 'email'], this.props)
       const newState = {}
-      if (!isEmailValid(email)) {
+      if (!isEmailValid(emailValue)) {
         newState.emailError = 'Adresse email non valide!'
       }
       if (!isPasswordValid(password)) {
@@ -67,26 +71,26 @@ export default class Login extends React.Component {
         this.setState({ ...newState })
         return
       }
-      const URL = `https://covidrescue.app/covidrescue-main-backend/login?username=${email}&password=${password}`;
+      const URL = `https://covidrescue.app/covidrescue-main-backend/login?username=${emailValue}&password=${password}`;
       this.setState({ loginLoading: true })
       axios.post(URL)
           .then(Response => {
               AsyncStorage.setItem('pw', password)
               AsyncStorage.setItem('account', Response.headers.account);
-              console.log(Response.headers.account);
-              this.setState({ loginLoading: false })
+              this.setState({ loginLoading: false, loginError: null })
               this.props.navigation.navigate('main');
 
           })
           .catch(error => {
-            console.log('LOGIN ERROR', error.response)
-            this.setState({ loginError: error.response, loginLoading: false })
+            const errorMessage = getErrorMessage(error) || 'Une erreur s\'est produite, veuillez réessayer plus tard!'
+            this.setState({ loginError: errorMessage, loginLoading: false })
           })
     }
     render() {
       const { emailError, passwordError } = this.state
       const emailLabel = emailError || 'Adresse e-mail'
       const passwordLabel = passwordError || 'Mot de passe'
+      const emailValue = pathOr(this.state.email, ['route', 'params', 'email'], this.props)
       return (
           <View style={[styles.mainContainer, { paddingBottom: this.state.mainContainerPadding }]}>
 
@@ -107,12 +111,13 @@ export default class Login extends React.Component {
                             }}
                             labelStyle={emailError ? { color: ERROR_THEME_COLOR } : undefined}
                             label={emailLabel}
-                            iconClass={FontAwesomeIcon}
+                            iconClass={FontAwesome5}
                             iconName={'envelope'}
                             iconColor={emailError ? ERROR_THEME_COLOR : BLUE_THEME_COLOR}
                             iconSize={20}
                             iconWidth={40}
                             inputPadding={16}
+                            value={emailValue}
                             onChangeText={(email) => this.setState({ email, emailError: null, loginError: null })}
                           />
 
@@ -125,7 +130,7 @@ export default class Login extends React.Component {
                             }}
                             labelStyle={passwordError ? { color: ERROR_THEME_COLOR } : undefined}
                             label={passwordLabel}
-                            iconClass={FontAwesomeIcon}
+                            iconClass={FontAwesome5}
                             iconName={'lock'}
                             iconColor={passwordError ? ERROR_THEME_COLOR : BLUE_THEME_COLOR}
                             iconSize={20}
@@ -139,7 +144,7 @@ export default class Login extends React.Component {
               </TouchableWithoutFeedback>
               <TouchableOpacity
                 activeOpacity={0.7}
-                onPress={this.login}
+                onPress={this._login}
               >
                 <Button
                   icon="login"
@@ -155,28 +160,29 @@ export default class Login extends React.Component {
                 onPress={() => this.props.navigation.navigate('Register')}
               >
                 <Button
+                  icon="account-plus"
                   mode="outlined"
                   color={BLUE_THEME_COLOR}
                   style={styles.buttonStyle}
                 >
                   S'inscrir
                 </Button>
-                <Snackbar
-                  visible={this.state.loginError}
-                  onDismiss={this._onDismissSnackBar}
-                  duration={3000}
-                  style={{
-                    backgroundColor: BLUE_THEME_COLOR,
-                    opacity: 0.9,
-                  }}
-                  action={{
-                    label: 'Dismiss',
-                    onPress: () => this._onDismissSnackBar,
-                  }}
-                >
-                  Error! Try again alter
-                </Snackbar>
               </TouchableOpacity>
+              <Snackbar
+                visible={this.state.loginError}
+                onDismiss={this._onDismissSnackBar}
+                duration={3000}
+                style={{
+                  backgroundColor: BLUE_THEME_COLOR,
+                  opacity: 0.9,
+                }}
+                action={{
+                  label: 'Dismiss',
+                  onPress: () => this._onDismissSnackBar,
+                }}
+              >
+              {this.state.loginError}
+            </Snackbar>
 
           </View>
       );

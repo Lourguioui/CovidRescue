@@ -1,27 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-
-import { createAppContainer } from 'react-navigation';
-import { createDrawerNavigator } from 'react-navigation-drawer';
-import { Dimensions } from 'react-native';
-import { Feather } from '@expo/vector-icons';
-import { IonIcons } from "@expo/vector-icons";
-import Advices from './screens/Advices';
+import React from 'react';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { Root } from 'native-base';
 import Register from './screens/Register';
-import Login from './screens/Login';
-
-import { FontAwesome5 } from '@expo/vector-icons';
-import SideBar from './components/SideBar';
+import Login from './screens/Login';;
 import HomeScreen from './screens/HomeScreen';
+import Confirm from './screens/Confirm'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-
 const StackNavigator = createStackNavigator();
-
+console.disableYellowBox = true;
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -50,7 +39,7 @@ export default class App extends React.Component {
         <StackNavigator.Screen name="Login" component={Login} />
         <StackNavigator.Screen name="main" component={HomeScreen} />
         <StackNavigator.Screen name="Register" component={Register} />
-        
+        <StackNavigator.Screen name="Confirm" component={Confirm} />
            
       </StackNavigator.Navigator>
     </NavigationContainer>
